@@ -21,35 +21,28 @@
 						<div class="item">
 							<div class="item-heading">
 								<h4>
-									<span class="label label-success">NEW</span>&nbsp; <a href="###">${article.articleTitle}</a>
+									<span class="text-primary"><i class="icon-file-text"></i>&nbsp; <a href="${baseUrl}/articlePage?articleId=${article.articleId}">${article.articleTitle}</a></span>
 								</h4>
 								<div class="pull-right">
-									<a href="###" class="label label-warning"><i class="icon-pencil"></i>&nbsp;编辑</a> &nbsp;<a href="#" class="label label-danger"><i class="icon-remove"></i>&nbsp;删除</a>
+									<a href="###" class="text-muted"><i class="icon-pencil"></i>&nbsp;编辑</a>
 								</div>
 								<p>
-									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;
-									<span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleUpdateDt}</span>&nbsp;
-									<a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
+									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleUpdateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
 								</p>
 							</div>
 							<div class="item-content">
 								<div class="media pull-left">
 									<div class="media-place-holder">
-										<img alt="${article.articleTitle}" src="${article.articleThumbnail}">
+										<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><img alt="${article.articleTitle}" src="${article.articleThumb}"></a>
 									</div>
 								</div>
 								<div class="text">
-									<#if article.articleContent?length lt 300 > 
-                                  		${article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")}
-                                  	<#else>
-                                  		${article.articleContent[0..300]?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")}...
-                                  	</#if>
-                                  	<a href="#" class="text-muted pull-right text-primary"><i class="icon-double-angle-right"></i>&nbsp;阅读全文</a>
-                                 </div>
+									<#if article.articleContent?length lt 300 > ${article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")} <#else> ${article.articleContent[0..300]?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")}... </#if> <a href="${baseUrl}/articlePage?articleId=${article.articleId}" class="text-danger"><i class="icon-double-angle-right"></i>&nbsp;<strong>阅读全文</strong></a>
+								</div>
 							</div>
 							<div class="item-footer">
-								<p class="text-muted"><i class="icon-tags"></i>&nbsp;
-									<span class="label">tag1</span> &nbsp;
+								<p class="text-muted">
+									<i class="icon-tags"></i>&nbsp; <#if article.tagName??> <#list article.tagName?split(",") as tag> <span class="label">${tag}</span> </#list> </#if>
 								</p>
 							</div>
 						</div>

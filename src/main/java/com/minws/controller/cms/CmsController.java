@@ -1,6 +1,8 @@
 package com.minws.controller.cms;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.json.JSONException;
 
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
@@ -8,10 +10,16 @@ import com.jfinal.plugin.activerecord.Page;
 import com.minws.entity.sys.DataGrid;
 import com.minws.entity.sys.Message;
 import com.minws.frame.plugin.shiro.ShiroKit;
+import com.minws.frame.sdk.ueditor.UeditorKit;
 import com.minws.model.cms.Article;
 import com.minws.model.cms.Category;
 
 public class CmsController extends Controller {
+	
+	public void ueditor() throws JSONException, FileUploadException {
+		String result = new UeditorKit(getRequest()).exec();
+		renderText(result);
+	}
 
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
@@ -22,16 +30,13 @@ public class CmsController extends Controller {
 		render("front/index.htm");
 	}
 
-	/*public void article() {
-		Integer pageNumber = getParaToInt("pageNumber", 1);
-		Integer pageSize = getParaToInt("pageSize", 10);
-		//setAttr("articlePage", Article.dao.selectAllArticles(pageNumber, pageSize));
-		//setAttr("categoryList", Category.dao.selectAllCategories());
-		//setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
-		render("front/article.htm");
+	public void articlePage() {
+		Integer articleId = getParaToInt("articleId", 1);
+		setAttr("article", Article.dao.getArticleByArticleId(articleId));
+		render("front/articlePage.htm");
 	}
 
-	*//**
+	/**//**
 	 * 分页查询客户
 	 *//*
 	public void articleJson() {

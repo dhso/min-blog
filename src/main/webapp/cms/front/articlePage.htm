@@ -1,0 +1,63 @@
+<#assign head_title = "${article.articleTitle}"> <#assign page_type = "articlePage">
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><#include "common/_head.htm" encoding="UTF-8">
+</head>
+<body>
+	<#include "common/header.htm" encoding="UTF-8">
+	<div class="container">
+
+		<ul class="breadcrumb breadcrumb-block">
+			<li><i class="icon-location-arrow icon-muted"></i></li>
+			<li><a href="#">首页</a></li>
+			<li><a href="#">文章页</a></li>
+			<li class="active">${article.articleTitle}</li>
+		</ul>
+
+		<div class="clearfix ">
+			<div class="pull-left main-container">
+
+				<article class="article">
+					<header>
+						<h3 class="text-left">
+							<i class="icon-file-text"></i>&nbsp;${article.articleTitle}
+						</h3>
+						<section class="abstract">
+							<span class="text-muted"><i class="icon-user"></i>&nbsp;<strong>作者：</strong>${article.articleAuthor}</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-eye-open"></i>&nbsp;<strong>浏览量：</strong>${article.articleView}</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-bookmark"></i>&nbsp;<strong>分类：</strong><a href="categoryList?categoryId=${article.categoryId}">${article.categoryName}</a></span>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-comments"></i>&nbsp;<strong>评论数：</strong><a href="#">243</a></span>
+						</section>
+					</header>
+					<section class="article-content">${article.articleContent}</section>
+					<p class="text-muted">
+						<i class="icon-tags"></i>&nbsp; <#if article.tagName??> <#list article.tagName?split(",") as tag> <span class="label">${tag}</span> </#list> </#if>
+					</p>
+					<footer>
+						<p class="pull-right text-muted">
+							<span class="text-muted"><strong>发布时间：</strong>${article.articleUpdateDt}</span>
+						</p>
+						<p class="text-important">
+							本文版权所有归<a href="###">@${article.articleAuthor}</a>
+						</p>
+						<ul class="pager pager-justify">
+							<li class="previous"><a href="#"><i class="icon-arrow-left"></i> 论烧火煮饭</a></li>
+							<li><a href="#"><i class="icon-list-ul"></i> 目录</a></li>
+							<li class="next disabled"><a href="#">没有下一篇 <i class="icon-arrow-right"></i></a></li>
+						</ul>
+					</footer>
+				</article>
+
+			</div>
+			<div class="pull-right sidebar-container hidden-xs">
+				<div class="panel">
+					<div class="panel-heading">面板标题</div>
+					<div class="panel-body">面板内容</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<#include "common/_foot.htm" encoding="UTF-8">
+</body>
+</html>

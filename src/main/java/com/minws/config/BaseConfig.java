@@ -28,7 +28,6 @@ import com.jfinal.render.IErrorRenderFactory;
 import com.jfinal.render.RedirectRender;
 import com.jfinal.render.Render;
 import com.minws.controller.cms.CmsController;
-import com.minws.controller.sys.MainController;
 import com.minws.controller.sys.SecurityController;
 import com.minws.frame.kit.HttpKit;
 import com.minws.frame.plugin.shiro.FreemarketShiroTags;
@@ -57,9 +56,8 @@ public class BaseConfig extends JFinalConfig {
 	@Override
 	public void configRoute(Routes rs) {
 		this.routes = rs;
-		rs.add("/", MainController.class);// Index
 		rs.add("/security", SecurityController.class, "/security");// 安全
-		rs.add("/blog", CmsController.class, "/cms");// CMS
+		rs.add("/", CmsController.class, "/cms");// CMS
 		rs.add("/alipay", AlipayController.class, "/alipay");// 支付宝
 	}
 

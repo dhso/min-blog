@@ -21,6 +21,10 @@ body {
 	margin-bottom: 0px;
 }
 
+.container .article {
+	padding-top: 0px;
+}
+
 .navbar-fixed-center {
 	margin: 0 auto;
 	box-shadow: 1px 1px 1px #ccc;
