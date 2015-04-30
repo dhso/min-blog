@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `cms_article_tag` (
   PRIMARY KEY (`article_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='博客标签link表';
 
--- Dumping data for table cms.cms_article_tag: ~0 rows (approximately)
+-- Dumping data for table cms.cms_article_tag: ~2 rows (approximately)
 DELETE FROM `cms_article_tag`;
 /*!40000 ALTER TABLE `cms_article_tag` DISABLE KEYS */;
 INSERT INTO `cms_article_tag` (`article_id`, `tag_id`) VALUES
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `cms_categories` (
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='博客分类';
 
--- Dumping data for table cms.cms_categories: ~0 rows (approximately)
+-- Dumping data for table cms.cms_categories: ~1 rows (approximately)
 DELETE FROM `cms_categories`;
 /*!40000 ALTER TABLE `cms_categories` DISABLE KEYS */;
 INSERT INTO `cms_categories` (`category_id`, `category_pid`, `category_name`, `update_dt`) VALUES
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `cms_tags` (
   PRIMARY KEY (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='博客标签';
 
--- Dumping data for table cms.cms_tags: ~0 rows (approximately)
+-- Dumping data for table cms.cms_tags: ~2 rows (approximately)
 DELETE FROM `cms_tags`;
 /*!40000 ALTER TABLE `cms_tags` DISABLE KEYS */;
 INSERT INTO `cms_tags` (`tag_id`, `tag_name`, `update_dt`) VALUES
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `idx_permissions_permission` (`permission`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table cms.permissions: ~0 rows (approximately)
+-- Dumping data for table cms.permissions: ~1 rows (approximately)
 DELETE FROM `permissions`;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 INSERT INTO `permissions` (`id`, `permission`, `description`, `available`) VALUES
