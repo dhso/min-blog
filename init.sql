@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `articles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table tps.articles: ~20 rows (approximately)
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
 INSERT INTO `articles` (`id`, `category_id`, `title`, `content`, `writer`, `update_dt`) VALUES
 	(1, 1, '优惠活动一', '优惠活动一的内容啦啦啦', 'admin', '2015-01-31 20:25:55'),
