@@ -1,4 +1,4 @@
-﻿<%
+<%
 /* *
  *功能：手机网页支付接入页
  *版本：3.3
@@ -17,8 +17,8 @@
  */
 %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.minws.wechat.frame.sdk.alipay.config.*"%>
-<%@ page import="com.minws.wechat.frame.sdk.alipay.util.*"%>
+<%@ page import="com.minws.frame.sdk.alipay.config.*"%>
+<%@ page import="com.minws.frame.sdk.alipay.util.*"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.net.URLDecoder"%>

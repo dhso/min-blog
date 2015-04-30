@@ -24,7 +24,7 @@
 		<profile>
 			<id>pro</id>
 			<properties>
-				<log4j.rootLogger>DEBUG, aceAppender</log4j.rootLogger>
+				<log4j.rootLogger>INFO</log4j.rootLogger>
 			</properties>
 		</profile>
 	</profiles>

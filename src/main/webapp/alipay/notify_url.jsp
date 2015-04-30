@@ -1,4 +1,4 @@
-﻿<%
+<%
 /* *
  功能：支付宝服务器异步通知页面
  版本：3.3
@@ -17,8 +17,8 @@
 %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.minws.wechat.frame.sdk.alipay.util.*"%>
-<%@ page import="com.minws.wechat.frame.sdk.alipay.config.*"%>
+<%@ page import="com.minws.frame.sdk.alipay.util.*"%>
+<%@ page import="com.minws.frame.sdk.alipay.config.*"%>
 <%@ page import="org.dom4j.Document"%>
 <%@ page import="org.dom4j.DocumentHelper"%>
 <%
