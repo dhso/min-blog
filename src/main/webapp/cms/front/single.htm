@@ -1,0 +1,59 @@
+<#assign head_title = "单页">
+<#assign page_type = "blog">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<head><#include "common/head.htm" encoding="UTF-8"><body>
+		<!-- WRAPPER -->
+		<div class="wrapper">
+			<!-- HEADER -->
+			<#include "common/header.htm" encoding="UTF-8">
+			<!-- ENDS HEADER -->
+			<!-- NAV -->
+			<#include "common/nav.htm" encoding="UTF-8">
+			<!-- ENDS NAV -->
+			<!-- MAIN -->
+			<div id="main" class="cf">
+				<!-- posts list -->
+				<div id="posts-list" class="cf single-post">
+					<#if article??>
+					<article class="cf">
+						<div class="feature-image">
+							<img src="${article.articleThumbnail}" alt="Thumbnail" />
+						</div>
+						<div class="entry-title">
+							<div class="meta">${article.articleUpdateDt}<a href="#" class="author">${article.articleAuthor}</a>
+						</div>
+							<div class="post-heading">${article.articleTitle}</div>
+						</div>
+						<div class="excerpt entry-content">
+							<blockquote> This is a blockquote. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</blockquote>
+							${article.articleContent}
+						</div>	
+					</article>
+					</#if>
+				</div>
+				<!-- ENDS post list -->
+				<!-- SIDEBAR -->
+				<#include "common/sidebar.htm" encoding="UTF-8">
+				<!-- ENDS SIDEBAR -->
+			</div>
+			<!-- ENDS MAIN -->
+			<!-- WIDGETS -->
+			<#include "common/widgets.htm" encoding="UTF-8">
+			<!-- ENDS WIDGETS -->
+			<!-- FOOTER -->
+			<#include "common/footer.htm" encoding="UTF-8">
+			<!-- ENDS FOOTER -->
+		</div>
+		<!-- ENDS WRAPPER -->
+		<!-- FOOT -->
+		<#include "common/foot.htm" encoding="UTF-8">
+		<!-- ENDS FOOT -->
+	</body>
+</html>
