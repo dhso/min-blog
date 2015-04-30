@@ -16,18 +16,18 @@ public class CmsController extends Controller {
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
 		Integer pageSize = getParaToInt("pageSize", 10);
-		setAttr("articlePage", Article.dao.selectAllArticles(pageNumber, pageSize));
-		setAttr("categoryList", Category.dao.selectAllCategories());
-		setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
+		setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
+		//setAttr("categoryList", Category.dao.selectAllCategories());
+		//setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
 		render("front/index.htm");
 	}
 
 	public void article() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
 		Integer pageSize = getParaToInt("pageSize", 10);
-		setAttr("articlePage", Article.dao.selectAllArticles(pageNumber, pageSize));
-		setAttr("categoryList", Category.dao.selectAllCategories());
-		setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
+		//setAttr("articlePage", Article.dao.selectAllArticles(pageNumber, pageSize));
+		//setAttr("categoryList", Category.dao.selectAllCategories());
+		//setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
 		render("front/article.htm");
 	}
 
@@ -37,8 +37,8 @@ public class CmsController extends Controller {
 	public void articleJson() {
 		int pageNumber = getParaToInt("page", 1);
 		int pageSize = getParaToInt("rows", 10);
-		Page<Article> articlePage = Article.dao.selectAllArticles(pageNumber, pageSize);
-		DataGrid DataGrid = new DataGrid(String.valueOf(articlePage.getTotalRow()), articlePage.getList());
+		//Page<Article> articlePage = Article.dao.selectAllArticles(pageNumber, pageSize);
+		//DataGrid DataGrid = new DataGrid(String.valueOf(articlePage.getTotalRow()), articlePage.getList());
 		renderJson(DataGrid);
 	}
 

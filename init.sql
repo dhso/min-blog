@@ -10,49 +10,52 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table cms.blog_articles
-DROP TABLE IF EXISTS `blog_articles`;
-CREATE TABLE IF NOT EXISTS `blog_articles` (
+-- Dumping structure for table cms.cms_articles
+DROP TABLE IF EXISTS `cms_articles`;
+CREATE TABLE IF NOT EXISTS `cms_articles` (
   `article_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) DEFAULT '0',
   `article_thumb` varchar(255) NOT NULL DEFAULT ' ',
   `article_title` varchar(255) NOT NULL,
   `article_content` text NOT NULL,
-  `article_author` varchar(50) DEFAULT '匿名',
+  `user_id` int(11) NOT NULL,
   `article_view` int(11) DEFAULT '0',
   `create_dt` datetime DEFAULT NULL,
   `update_dt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`article_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='博客文章';
 
--- Dumping data for table cms.blog_articles: ~4 rows (approximately)
-DELETE FROM `blog_articles`;
-/*!40000 ALTER TABLE `blog_articles` DISABLE KEYS */;
-INSERT INTO `blog_articles` (`article_id`, `category_id`, `article_thumb`, `article_title`, `article_content`, `article_author`, `article_view`, `create_dt`, `update_dt`) VALUES
-	(1, 1, '', '第一篇文章', '这是正文', 'Hadong', 0, '2015-03-24 16:29:29', '2015-03-24 16:31:10'),
-	(2, 1, '', '第二篇文章', '这是正文', 'Hadong', 0, '2015-03-24 16:32:46', '2015-03-24 16:33:11'),
-	(3, 1, '', '第四篇文章', '这是正文', 'Hadong', 0, '2015-03-24 16:33:23', '2015-03-24 16:33:42'),
-	(4, 1, '', 'asd', '<p>asd<br/></p>', 'admin', 0, '2015-04-01 18:11:36', '2015-04-01 18:11:36');
-/*!40000 ALTER TABLE `blog_articles` ENABLE KEYS */;
+-- Dumping data for table cms.cms_articles: ~4 rows (approximately)
+DELETE FROM `cms_articles`;
+/*!40000 ALTER TABLE `cms_articles` DISABLE KEYS */;
+INSERT INTO `cms_articles` (`article_id`, `category_id`, `article_thumb`, `article_title`, `article_content`, `user_id`, `article_view`, `create_dt`, `update_dt`) VALUES
+	(1, 1, '', '第一篇文章', '这是正文', 1, 0, '2015-03-24 16:29:29', '2015-04-30 16:02:18'),
+	(2, 1, '', '第二篇文章', '这是正文', 1, 0, '2015-03-24 16:32:46', '2015-04-30 16:02:20'),
+	(3, 1, '', '第四篇文章', '这是正文', 2, 0, '2015-03-24 16:33:23', '2015-04-30 16:02:21'),
+	(4, 1, '', 'asd', '<p>asd<br/></p>', 2, 0, '2015-04-01 18:11:36', '2015-04-30 16:02:24');
+/*!40000 ALTER TABLE `cms_articles` ENABLE KEYS */;
 
 
--- Dumping structure for table cms.blog_article_tag
-DROP TABLE IF EXISTS `blog_article_tag`;
-CREATE TABLE IF NOT EXISTS `blog_article_tag` (
+-- Dumping structure for table cms.cms_article_tag
+DROP TABLE IF EXISTS `cms_article_tag`;
+CREATE TABLE IF NOT EXISTS `cms_article_tag` (
   `article_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`article_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='博客标签link表';
 
--- Dumping data for table cms.blog_article_tag: ~0 rows (approximately)
-DELETE FROM `blog_article_tag`;
-/*!40000 ALTER TABLE `blog_article_tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `blog_article_tag` ENABLE KEYS */;
+-- Dumping data for table cms.cms_article_tag: ~0 rows (approximately)
+DELETE FROM `cms_article_tag`;
+/*!40000 ALTER TABLE `cms_article_tag` DISABLE KEYS */;
+INSERT INTO `cms_article_tag` (`article_id`, `tag_id`) VALUES
+	(1, 1),
+	(1, 2);
+/*!40000 ALTER TABLE `cms_article_tag` ENABLE KEYS */;
 
 
--- Dumping structure for table cms.blog_categories
-DROP TABLE IF EXISTS `blog_categories`;
-CREATE TABLE IF NOT EXISTS `blog_categories` (
+-- Dumping structure for table cms.cms_categories
+DROP TABLE IF EXISTS `cms_categories`;
+CREATE TABLE IF NOT EXISTS `cms_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_pid` int(11) DEFAULT '0',
   `category_name` varchar(255) NOT NULL,
@@ -60,27 +63,30 @@ CREATE TABLE IF NOT EXISTS `blog_categories` (
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='博客分类';
 
--- Dumping data for table cms.blog_categories: ~0 rows (approximately)
-DELETE FROM `blog_categories`;
-/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
-INSERT INTO `blog_categories` (`category_id`, `category_pid`, `category_name`, `update_dt`) VALUES
+-- Dumping data for table cms.cms_categories: ~0 rows (approximately)
+DELETE FROM `cms_categories`;
+/*!40000 ALTER TABLE `cms_categories` DISABLE KEYS */;
+INSERT INTO `cms_categories` (`category_id`, `category_pid`, `category_name`, `update_dt`) VALUES
 	(1, 0, '测试', '2015-03-24 16:31:45');
-/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
+/*!40000 ALTER TABLE `cms_categories` ENABLE KEYS */;
 
 
--- Dumping structure for table cms.blog_tags
-DROP TABLE IF EXISTS `blog_tags`;
-CREATE TABLE IF NOT EXISTS `blog_tags` (
+-- Dumping structure for table cms.cms_tags
+DROP TABLE IF EXISTS `cms_tags`;
+CREATE TABLE IF NOT EXISTS `cms_tags` (
   `tag_id` int(11) NOT NULL,
   `tag_name` varchar(50) NOT NULL DEFAULT ' ',
   `update_dt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='博客标签';
 
--- Dumping data for table cms.blog_tags: ~0 rows (approximately)
-DELETE FROM `blog_tags`;
-/*!40000 ALTER TABLE `blog_tags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `blog_tags` ENABLE KEYS */;
+-- Dumping data for table cms.cms_tags: ~0 rows (approximately)
+DELETE FROM `cms_tags`;
+/*!40000 ALTER TABLE `cms_tags` DISABLE KEYS */;
+INSERT INTO `cms_tags` (`tag_id`, `tag_name`, `update_dt`) VALUES
+	(1, ' java', '2015-04-30 16:02:52'),
+	(2, ' js', '2015-04-30 16:08:11');
+/*!40000 ALTER TABLE `cms_tags` ENABLE KEYS */;
 
 
 -- Dumping structure for table cms.config
