@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<div style="position: absolute; top: 50%; left: 50%; width: 240px; margin: -120px 0 0 -120px; border: 1px #ccc solid; padding: 10px; box-shadow: 1px 1px 1px #ccc;">
+	<div style="position: absolute; top: 50%; left: 50%; width: 240px; margin: -150px 0 0 -120px; border: 1px #ccc solid; padding: 10px; box-shadow: 1px 1px 1px #ccc;">
 		<form action="${baseUrl}/security/signin" method="post">
 			<#if errorMsg??>
 			<div class="alert with-icon alert-warning">
@@ -38,7 +38,7 @@
 			</div>
 			<br>
 			<div class="input-group">
-				<#if rememberMe??&&rememberMe> <input type="checkbox" name="rememberMe" id="rememberMe" checked /> <#else> <input type="checkbox" name="rememberMe" id="rememberMe" /> </#if> 记住我
+				<#if rememberMe??&&rememberMe> <input type="checkbox" class="form-control" name="rememberMe" id="rememberMe" checked /> <#else> <input type="checkbox" name="rememberMe" id="rememberMe" /> </#if>记住我
 			</div>
 			<div class="input-group pull-right">
 				<button class="btn btn-primary" type="submit">
