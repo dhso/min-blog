@@ -27,7 +27,7 @@ public class CmsController extends Controller {
 		setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
 		//setAttr("categoryList", Category.dao.selectAllCategories());
 		//setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
-		render("front/index.htm");
+		render("front/articleList.htm");
 	}
 
 	public void articlePage() {

@@ -28,6 +28,8 @@ body {
 .navbar-fixed-center {
 	margin: 0 auto;
 	box-shadow: 1px 1px 1px #ccc;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 .main-container .items .item {

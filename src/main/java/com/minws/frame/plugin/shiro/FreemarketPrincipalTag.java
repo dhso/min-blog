@@ -34,7 +34,6 @@ import freemarker.template.TemplateException;
 public class FreemarketPrincipalTag extends SecureTag {
 	static final Logger log = Logger.getLogger("FreemarketPrincipalTag");
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
 		String result = null;

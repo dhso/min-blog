@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 DELETE FROM `permissions`;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 INSERT INTO `permissions` (`id`, `permission`, `description`, `available`) VALUES
-	(1, 'cms:article', NULL, 1);
+	(1, 'cms:article:edit', NULL, 1);
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 
 
