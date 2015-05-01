@@ -32,8 +32,9 @@ public class SecurityController extends Controller {
 			Subject currentUser = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
 			try {
+				String gotoUrl = getPara("gotoUrl", "index");
 				currentUser.login(token);
-				redirect("/back/index");
+				redirect(gotoUrl);
 			} catch (Exception e) {
 				// 登录失败
 				String esn = e.getClass().getSimpleName();
@@ -68,7 +69,8 @@ public class SecurityController extends Controller {
 		if (currentUser.isAuthenticated()) {
 			currentUser.logout();
 		}
-		forwardAction("/security/login");
+		String gotoUrl = getPara("gotoUrl", "index");
+		forwardAction(gotoUrl);
 	}
 
 	public void err401() {

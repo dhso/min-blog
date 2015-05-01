@@ -43,7 +43,12 @@
                 </tr>
                 <tr>
                 	<td colspan=2>
-                		<input type="checkbox" name="rememberMe" id="rememberMe" <#if rememberMe??&&rememberMe>checked</#if> /><label for="rememberMe">记住我</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                		<#if rememberMe??&&rememberMe>
+                		<input type="checkbox" name="rememberMe" id="rememberMe" checked/>
+                		<#else>
+                		<input type="checkbox" name="rememberMe" id="rememberMe"/>
+                		</#if>
+                		<label for="rememberMe">记住我</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 		<button type="submit" class="easyui-linkbutton">登录</button>
 						<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
 					</td>

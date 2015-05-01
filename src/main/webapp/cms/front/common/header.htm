@@ -27,7 +27,12 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"><i class="icon-cog"></i>&nbsp;配置</a></li>
-				<li><a href="#"><i class="icon-off"></i>&nbsp;退出</a></li>
+				<@shiro.authenticated>
+					<li><a href="${baseUrl}/security/signout?gotoUrl=${baseUrl}/index"><i class="icon-off"></i>&nbsp;退出</a></li>
+				</@shiro.authenticated>
+				<@shiro.notAuthenticated>
+					<li><a href="${baseUrl}/security/signin?gotoUrl=${baseUrl}/index"><i class="icon-off"></i>&nbsp;登录</a></li>
+				</@shiro.notAuthenticated>
 			</ul>
 		</div>
 	</nav>
