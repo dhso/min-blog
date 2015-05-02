@@ -10,13 +10,15 @@
 		<ul class="breadcrumb breadcrumb-block">
 			<li><i class="icon-location-arrow icon-muted"></i></li>
 			<li><a href="${baseUrl}/index">首页</a></li>
-			<li class="active">文章列表</li>
+			<li><a href="${baseUrl}/index">文章列表</a></li>
+			<#if breadcrumbTag??><li><a href="${baseUrl}/index?tagId=${breadcrumbTag.tagId}">${breadcrumbTag.tagName}</a></li></#if>
+			<li class="active">第&nbsp;${articlePage.pageNumber}&nbsp;页</li>
 		</ul>
 
 		<div class="clearfix ">
 			<div class="pull-left main-container">
 				<div class="list">
-					<section class="items items-hover">
+					<section class="items">
 						<#list articlePage.list as article>
 						<div class="item">
 							<div class="item-heading">
@@ -33,11 +35,13 @@
 								</p>
 							</div>
 							<div class="item-content">
+								<#if article.articleThumb??>
 								<div class="media pull-left">
 									<div class="media-place-holder">
 										<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><img alt="${article.articleTitle}" src="${article.articleThumb}"></a>
 									</div>
 								</div>
+								</#if>
 								<div class="text">
 									<#assign articleContentFormat = article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")>
 									<#if articleContentFormat?length lt 300 > ${articleContentFormat} <#else> ${articleContentFormat[0..300]}... </#if> <a href="${baseUrl}/articlePage?articleId=${article.articleId}" class="text-danger"><i class="icon-double-angle-right"></i>&nbsp;<strong>阅读全文</strong></a>

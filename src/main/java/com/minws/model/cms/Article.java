@@ -7,6 +7,8 @@
  */
 package com.minws.model.cms;
 
+import java.util.List;
+
 import com.jfinal.ext.plugin.sqlinxml.SqlKit;
 import com.jfinal.ext.plugin.tablebind.TableBind;
 import com.jfinal.plugin.activerecord.Db;
@@ -23,8 +25,16 @@ public class Article extends Model<Article> {
 		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticles"), SqlKit.sql("cms.getArticlesEx"));
 	}
 
+	public Page<Record> getArticles(Integer pageNumber, Integer pageSize, Integer tagId) {
+		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticlesByTagId"), SqlKit.sql("cms.getArticlesByTagIdEx"), tagId);
+	}
+
 	public Record getArticleByArticleId(Integer articleId) {
 		return Db.findFirst(SqlKit.sql("cms.getArticleByArticleId"), articleId);
+	}
+
+	public List<Record> getPopularArticles(int number) {
+		return Db.find(SqlKit.sql("cms.getPopularArticles"), number);
 	}
 
 }

@@ -60,6 +60,9 @@ body {
 		width: 182px;
 		box-shadow: 1px 1px 1px #ccc;
 	}
+	.article {
+		width: 538px;
+	}
 }
 
 @media ( min-width : 992px) {
@@ -76,6 +79,9 @@ body {
 		width: 230px;
 		box-shadow: 1px 1px 1px #ccc;
 	}
+	.article {
+		width: 710px;
+	}
 }
 
 @media ( min-width : 1200px) {
@@ -91,5 +97,8 @@ body {
 	.sidebar-container .panel {
 		width: 290px;
 		box-shadow: 1px 1px 1px #ccc;
+	}
+	.article {
+		width: 850px;
 	}
 }

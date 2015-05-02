@@ -27,6 +27,9 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<@shiro.authenticated>
+					<li><a href="${baseUrl}/back/article/add"><i class="icon-edit"></i>&nbsp;写文章</a></li>
+				</@shiro.authenticated>
 				<li><a href="#"><i class="icon-cog"></i>&nbsp;配置</a></li>
 				<@shiro.authenticated>
 					<li><a href="${baseUrl}/security/signout"><i class="icon-off"></i>&nbsp;退出</a></li>

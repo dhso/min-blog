@@ -24,4 +24,8 @@ public class Tag extends Model<Tag> {
 		return Db.find(SqlKit.sql("cms.getTags"));
 	}
 
+	public Record getTagByTagId(Integer tagId) {
+		return Db.findFirst(SqlKit.sql("cms.getTagByTagId"), tagId);
+	}
+
 }

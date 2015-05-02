@@ -25,10 +25,15 @@ public class CmsController extends Controller {
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
 		Integer pageSize = getParaToInt("pageSize", 10);
-		setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
+		Integer tagId = getParaToInt("tagId", -1);
+		if (tagId == -1) {
+			setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
+		} else {
+			setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize, tagId));
+			setAttr("breadcrumbTag", Tag.dao.getTagByTagId(tagId));
+		}
 		setAttr("tagList", Tag.dao.getTags());
-		// setAttr("categoryList", Category.dao.selectAllCategories());
-		// setAttr("popularArticleList", Article.dao.selectPopularArticles(5));
+		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
 		render("front/articleList.htm");
 	}
 
@@ -36,7 +41,15 @@ public class CmsController extends Controller {
 		Integer articleId = getParaToInt("articleId", 1);
 		setAttr("article", Article.dao.getArticleByArticleId(articleId));
 		setAttr("tagList", Tag.dao.getTags());
+		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
 		render("front/articlePage.htm");
+	}
+
+	@ActionKey("back/article/add")
+	@RequiresPermissions("cms:article:add")
+	public void addArticle() {
+		
+		render("back/addArticle.htm");
 	}
 
 	/**//**
