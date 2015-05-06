@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.crypto.hash.format.Shiro1CryptFormat;
 
 import com.jfinal.ext.plugin.sqlinxml.SqlKit;
 import com.jfinal.ext.plugin.tablebind.TableBind;
@@ -61,11 +60,11 @@ public class Article extends Model<Article> {
 				tagsId.add(tagId);
 			}
 		}
-		Db.update(SqlKit.sql("cms.addArticle"), articleTitle, editorValue, SecurityUtils.getSubject().getPrincipal(), new Date());
-		Integer articleId = Db.findFirst("select article_id from cms_articles where article_title = ?", articleTitle).getInt("article_id");
+		Db.update(SqlKit.sql("cms.addArticle"), articleTitle, editorValue, SecurityUtils.getSubject().getPrincipal().toString(), new Date());
+		Integer articleId = Db.findFirst("select article_id from cms_articles where article_title = ? and article_author = ?", articleTitle, SecurityUtils.getSubject().getPrincipal().toString()).getInt("article_id");
 		Iterator<Integer> tagsIt = tagsId.iterator();
 		while (tagsIt.hasNext()) {
-			Db.update("insert into cms_article_tag (article_id,tag_id) values(?,?)", articleId, tagsIt);
+			Db.update("insert into cms_article_tag (article_id,tag_id) values(?,?)", articleId, tagsIt.next());
 		}
 	}
 
