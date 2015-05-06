@@ -1,16 +1,14 @@
 <sqlGroup name="cms">
 	<sql id="getArticles">
 		select
-		art.article_id as articleId,art.article_thumb as articleThumb,
-		art.article_title as articleTitle,art.article_content as articleContent,
-		usr.username as articleAuthor,art.article_view as articleView,
-		art.create_dt as articleCreateDt,art.update_dt as articleUpdateDt,
-		cat.category_id as categoryId,cat.category_name as categoryName,
-		group_concat(tag.tag_id) as tagId, group_concat(tag.tag_name) as tagName
+		art.article_id as articleId,art.article_title as articleTitle,
+		art.article_content as articleContent,usr.username as articleAuthor,
+		art.article_view as articleView,art.create_dt as articleCreateDt,
+		art.update_dt as articleUpdateDt,group_concat(tag.tag_id) as tagId,
+		group_concat(tag.tag_name) as tagName
 	</sql>
 	<sql id="getArticlesEx">
 		from cms_articles as art
-		left join cms_categories as cat on cat.category_id = art.category_id
 		left join users as usr on usr.id = art.user_id
 		left join cms_article_tag as art_tag on art_tag.article_id = art.article_id
 		left join cms_tags as tag on tag.tag_id = art_tag.tag_id
@@ -20,16 +18,13 @@
 
 	<sql id="getArticlesByTagId">
 		select
-		art.article_id as articleId,art.article_thumb as articleThumb,
-		art.article_title as articleTitle,art.article_content as articleContent,
-		usr.username as articleAuthor,art.article_view as articleView,
+		art.article_id as articleId,art.article_title as articleTitle,
+		art.article_content as articleContent,usr.username as articleAuthor,art.article_view as articleView,
 		art.create_dt as articleCreateDt,art.update_dt as articleUpdateDt,
-		cat.category_id as categoryId,cat.category_name as categoryName,
 		group_concat(tag.tag_id) as tagId, group_concat(tag.tag_name) as tagName
 	</sql>
 	<sql id="getArticlesByTagIdEx">
 		from cms_articles as art
-		left join cms_categories as cat on cat.category_id = art.category_id
 		left join users as usr on usr.id = art.user_id
 		left join cms_article_tag as art_tag on art_tag.article_id = art.article_id
 		left join cms_tags as tag on tag.tag_id = art_tag.tag_id
@@ -43,14 +38,12 @@
 
 	<sql id="getArticleByArticleId">
 		select
-		art.article_id as articleId,art.article_thumb as articleThumb,
-		art.article_title as articleTitle,art.article_content as articleContent,
-		usr.username as articleAuthor,art.article_view as articleView,
-		art.create_dt as articleCreateDt,art.update_dt as articleUpdateDt,
-		cat.category_id as categoryId,cat.category_name as categoryName,
-		group_concat(tag.tag_id) as tagId, group_concat(tag.tag_name) as tagName
+		art.article_id as articleId,art.article_title as articleTitle,
+		art.article_content as articleContent,usr.username as articleAuthor,
+		art.article_view as articleView,art.create_dt as articleCreateDt,
+		art.update_dt as articleUpdateDt,group_concat(tag.tag_id) as tagId,
+		group_concat(tag.tag_name) as tagName
 		from cms_articles as art
-		left join cms_categories as cat on cat.category_id = art.category_id
 		left join users as usr on usr.id = art.user_id
 		left join cms_article_tag as art_tag on art_tag.article_id = art.article_id
 		left join cms_tags as tag on tag.tag_id = art_tag.tag_id
@@ -64,7 +57,7 @@
 		from cms_tags
 		order by update_dt desc
 	</sql>
-	
+
 	<sql id="getTagByTagId">
 		select tag_id as tagId,tag_name as tagName
 		from cms_tags
@@ -77,5 +70,10 @@
 		from cms_articles as art
 		order by art.article_title desc
 		limit ?
+	</sql>
+
+	<sql id="addArticle">
+		insert into cms_articles(article_title,article_content,user_id,create_dt)
+		values(?,?,?,?)
 	</sql>
 </sqlGroup>

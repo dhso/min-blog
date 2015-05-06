@@ -46,6 +46,14 @@ body {
 	line-height: 100px
 }
 
+.editorFrom .input-group {
+	margin: 10px 0 0 0;
+}
+
+.tag-editor {
+	border: 1px solid #ccc !important;
+}
+
 @media ( min-width : 768px) {
 	.navbar-fixed-center {
 		max-width: 740px;

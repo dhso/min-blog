@@ -4,23 +4,15 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.json.JSONException;
 
+import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
-import com.jfinal.plugin.activerecord.Page;
-import com.minws.entity.sys.DataGrid;
-import com.minws.entity.sys.Message;
-import com.minws.frame.plugin.shiro.ShiroKit;
+import com.jfinal.plugin.activerecord.tx.Tx;
 import com.minws.frame.sdk.ueditor.UeditorKit;
 import com.minws.model.cms.Article;
-import com.minws.model.cms.Category;
 import com.minws.model.cms.Tag;
 
 public class CmsController extends Controller {
-
-	public void ueditor() throws JSONException, FileUploadException {
-		String result = new UeditorKit(getRequest()).exec();
-		renderText(result);
-	}
 
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
@@ -45,13 +37,35 @@ public class CmsController extends Controller {
 		render("front/articlePage.htm");
 	}
 
+	@ActionKey("back/ueditor")
+	public void ueditor() throws JSONException, FileUploadException {
+		String result = new UeditorKit(getRequest()).exec();
+		renderText(result);
+	}
+
 	@ActionKey("back/article/add")
 	@RequiresPermissions("cms:article:add")
 	public void addArticle() {
-		
+		setAttr("tagList", Tag.dao.getTags());
 		render("back/addArticle.htm");
 	}
 
+	@ActionKey("back/article/submit")
+	@RequiresPermissions("cms:article:add")
+	@Before(Tx.class)
+	public void submitArticle() {
+		Integer articleId = getParaToInt("articleId", -1);
+		String articleTitle = getPara("articleTitle");
+		String editorValue = getPara("editorValue");
+		String articleTag = getPara("articleTag");
+		if (articleId == -1) {
+			Article.dao.addArticle(articleTitle, editorValue, articleTag);
+		} else {
+			Article.dao.updateArticle(articleId, articleTitle, editorValue, articleTag);
+		}
+		setAttr("tagList", Tag.dao.getTags());
+		render("back/addArticle.htm");
+	}
 	/**//**
 	 * 分页查询客户
 	 */
