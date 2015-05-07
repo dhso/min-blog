@@ -51,16 +51,31 @@
 					</section>
 					<footer>
 						<ul class="pager">
-							<li class="previous disabled"><a href="#">« 上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">⋯</a></li>
-							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">9</a></li>
-							<li><a href="#">⋯</a></li>
-							<li><a href="#">12</a></li>
-							<li class="next"><a href="#">下一页 »</a></li>
+							<#if articlePage.pageNumber gt 1>
+							<li class="previous"><a href="${baseUrl}/index?pageNumber=${articlePage.pageNumber-1}">« 上一页</a></li>
+							<#else>
+							<li class="previous disabled"><a href="javascript:void(0);">« 上一页</a></li>
+							</#if>
+							
+							<#list articlePage.pageNumber-4..articlePage.pageNumber-1 as spn>
+							<#if spn gt 0>
+							<li><a href="${baseUrl}/index?pageNumber=${spn}">${spn}</a></li>
+							</#if>
+							</#list>
+							
+							<li class="active"><a href="javascript:void(0);">${articlePage.pageNumber}</a></li>
+							
+							<#list articlePage.pageNumber+1..articlePage.pageNumber+4 as epn>
+							<#if epn lte articlePage.totalPage>
+							<li><a href="${baseUrl}/index?pageNumber=${epn}">${epn}</a></li>
+							</#if>
+							</#list>
+							
+							<#if articlePage.pageNumber lt articlePage.totalPage>
+							<li class="next"><a href="${baseUrl}/index?pageNumber=${articlePage.pageNumber+1}">下一页 »</a></li>
+							<#else>
+							<li class="next disabled"><a href="javascript:void(0);">下一页 »</a></li>
+							</#if>
 						</ul>
 					</footer>
 				</div>

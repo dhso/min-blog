@@ -52,6 +52,8 @@ body {
 	border-width: 0 1px;
 	border-style: solid;
 	border-color: #ddd;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 
 .main-container .items .item .item-footer {
@@ -81,6 +83,10 @@ body {
 	border: 1px solid #ccc !important;
 }
 
+.article {
+	background-color: white;
+}
+
 @media ( min-width : 768px) {
 	.navbar-fixed-center {
 		max-width: 740px;
@@ -94,9 +100,6 @@ body {
 	}
 	.sidebar-container .panel {
 		width: 182px;
-	}
-	.article {
-		background-color: white;
 	}
 }
 
@@ -114,9 +117,6 @@ body {
 	.sidebar-container .panel {
 		width: 230px;
 	}
-	.article {
-		background-color: white;
-	}
 }
 
 @media ( min-width : 1200px) {
@@ -132,8 +132,5 @@ body {
 	}
 	.sidebar-container .panel {
 		width: 290px;
-	}
-	.article {
-		background-color: white;
 	}
 }
