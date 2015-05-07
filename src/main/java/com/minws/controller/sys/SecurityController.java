@@ -65,9 +65,10 @@ public class SecurityController extends Controller {
 	// 登出Action
 	public void signout() {
 		Subject currentUser = SecurityUtils.getSubject();
-		if (currentUser.isAuthenticated()) {
+		/*if (currentUser.isAuthenticated()) {
 			currentUser.logout();
-		}
+		}*/
+		currentUser.logout();
 		redirect(getPara("redirectUrl", "/"));
 	}
 
