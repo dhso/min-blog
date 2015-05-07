@@ -39,11 +39,15 @@ public class Article extends Model<Article> {
 		return Db.findFirst(SqlKit.sql("cms.getArticleByArticleId"), articleId);
 	}
 
+	public int updateArticleView(Integer articleId) {
+		return Db.update("update cms_articles set article_view = article_view + 1 where article_id= ?", articleId);
+	}
+
 	public List<Record> getPopularArticles(int number) {
 		return Db.find(SqlKit.sql("cms.getPopularArticles"), number);
 	}
 
-	public void addArticle(String articleTitle, String editorValue, String articleTag) {
+	public Record addArticle(String articleTitle, String editorValue, String articleTag) {
 		List<String> tags = Arrays.asList(articleTag.split(","));
 		List<Integer> tagsId = new ArrayList<Integer>();
 		Iterator<String> it = tags.iterator();
@@ -61,15 +65,38 @@ public class Article extends Model<Article> {
 			}
 		}
 		Db.update(SqlKit.sql("cms.addArticle"), articleTitle, editorValue, SecurityUtils.getSubject().getPrincipal().toString(), new Date());
-		Integer articleId = Db.findFirst("select article_id from cms_articles where article_title = ? and article_author = ?", articleTitle, SecurityUtils.getSubject().getPrincipal().toString()).getInt("article_id");
+		Integer articleId = Db.findFirst("select article_id from cms_articles where article_title = ? and article_author = ? order by create_dt desc", articleTitle, SecurityUtils.getSubject().getPrincipal().toString()).getInt("article_id");
 		Iterator<Integer> tagsIt = tagsId.iterator();
 		while (tagsIt.hasNext()) {
 			Db.update("insert into cms_article_tag (article_id,tag_id) values(?,?)", articleId, tagsIt.next());
 		}
+		Record article = Db.findFirst(SqlKit.sql("cms.getArticleByArticleId"), articleId);
+		return article;
 	}
 
 	public void updateArticle(Integer articleId, String articleTitle, String editorValue, String articleTag) {
-		Db.update(SqlKit.sql("cms.updateArticle"), articleId, articleTitle, editorValue, articleTag);
+		List<String> tags = Arrays.asList(articleTag.split(","));
+		List<Integer> tagsId = new ArrayList<Integer>();
+		Db.update(SqlKit.sql("cms.updateArticle"), articleTitle, editorValue, articleId);
+		Db.update("delete from cms_article_tag where article_id = ?", articleId);
+		Iterator<String> it = tags.iterator();
+		while (it.hasNext()) {
+			String tagName = it.next();
+			Record record = Db.findFirst("select * from cms_tags where tag_name = ?", tagName);
+			if (null == record) {
+				Db.update("insert into cms_tags (tag_name) values (?)", tagName);
+				record = Db.findFirst("select * from cms_tags where tag_name = ?", tagName);
+				Integer tagId = record.getInt("tag_id");
+				tagsId.add(tagId);
+			} else {
+				Integer tagId = record.getInt("tag_id");
+				tagsId.add(tagId);
+			}
+		}
+		Iterator<Integer> tagsIt = tagsId.iterator();
+		while (tagsIt.hasNext()) {
+			Db.update("insert into cms_article_tag (article_id,tag_id) values(?,?)", articleId, tagsIt.next());
+		}
 	}
 
 }
