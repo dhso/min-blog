@@ -13,7 +13,7 @@
 	<div class="panel-body">
 		<#list popularArticleList as article>
 		<p class="text-muted">
-			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><i class="icon-caret-right"></i>&nbsp;<#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
+			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><i class="icon-caret-right"></i>&nbsp;<small>[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
 		</p>
 		</#list>
 	</div>

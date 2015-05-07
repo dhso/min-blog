@@ -183,6 +183,18 @@
 			<artifactId>sdk</artifactId>
 			<version>6.1.7</version>
 		</dependency>
+		<!-- RSS -->
+		<dependency>
+			<groupId>rsslibj</groupId>
+			<artifactId>rsslibj</artifactId>
+			<version>1.0RC2</version>
+		</dependency>
+		<dependency>
+			<groupId>exml</groupId>
+			<artifactId>exml</artifactId>
+			<version>7.0</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<pluginManagement>

@@ -1,5 +1,9 @@
 package com.minws.controller.cms;
 
+import java.text.ParseException;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.json.JSONException;
@@ -7,10 +11,13 @@ import org.json.JSONException;
 import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.minws.frame.kit.StringKit;
 import com.minws.frame.sdk.ueditor.UeditorKit;
 import com.minws.model.cms.Article;
 import com.minws.model.cms.Tag;
+import com.rsslibj.elements.Channel;
 
 public class CmsController extends Controller {
 
@@ -80,5 +87,21 @@ public class CmsController extends Controller {
 		}
 		setAttr("tagList", Tag.dao.getTags());
 		render("back/editArticle.htm");
+	}
+
+	public void rss() throws ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		List<Record> articlePage = Article.dao.getArticles(1, 100).getList();
+		String mainUrl = "http://www.minws.com";
+		Channel channel = new Channel();
+		channel.setDescription("This is my sample channel.");
+		channel.setLink("/rss");
+		channel.setTitle("blog rss");
+		channel.setImage(mainUrl, "The Channel Image", mainUrl + "/foo.jpg");
+		Iterator<Record> it = articlePage.iterator();
+		while (it.hasNext()) {
+			Record article = it.next();
+			channel.addItem("articlePage?articleId=" + String.valueOf(article.get("articleId")), StringKit.replaceHtml(article.getStr("articleContent")), article.getStr("articleTitle")).setDcContributor(article.getStr("articleAuthor"));
+		}
+		renderText(channel.getFeed("rss"), "text/xml");
 	}
 }

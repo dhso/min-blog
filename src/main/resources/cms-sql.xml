@@ -64,7 +64,7 @@
 
 	<sql id="getPopularArticles">
 		select
-		art.article_id as articleId,art.article_title as articleTitle
+		art.article_id as articleId,art.article_title as articleTitle,art.article_author as articleAuthor
 		from cms_articles as art
 		order by art.article_view desc
 		limit ?
