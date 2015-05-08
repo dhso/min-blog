@@ -9,7 +9,7 @@ wx.jdbcPassword = 923389
 #wx.jdbcUrl = jdbc:mysql://192.168.3.110:3306/jfsys
 #wx.jdbcUser = root
 #wx.jdbcPassword = 923389
-wx.devMode = false
+wx.devMode = true
 
 #代理配置
 #wx.proxy.open = true

@@ -1,19 +1,19 @@
 <div class="panel">
 	<div class="panel-heading">
-		<span class="text-muted"><i class="icon-tags"></i>&nbsp;文章标签</span>
+		<span class="text-muted"><i class="icon-tags"></i>&nbsp;文章标签</span> <span class="pull-right"><a href="${baseUrl}/tagsWall" class="text-danger">所有标签&nbsp;<i class="icon-double-angle-right"></i></a></span>
 	</div>
 	<div class="panel-body">
-		<#list tagList as tag> <a class="label label-info" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> </#list>
+		<#list tagList as tag> <#if tag_index gt 10> <#break> <#elseif tag.tagId%6 == 0> <a class="label label-default" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 1> <a class="label label-primary" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 2> <a class="label label-success" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 3> <a class="label label-info" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 4> <a class="label label-warning" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 5> <a class="label label-danger" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> </#if> </#list>
 	</div>
 </div>
 <div class="panel">
 	<div class="panel-heading">
-		<span class="text-muted"><i class="icon-tags"></i>&nbsp;热门文章</span>
+		<span class="text-muted"><i class="icon-book"></i>&nbsp;热门文章</span>
 	</div>
 	<div class="panel-body">
 		<#list popularArticleList as article>
-		<p class="text-muted">
-			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><i class="icon-caret-right"></i>&nbsp;<small>[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
+		<p>
+			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><small class="text-warning">[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
 		</p>
 		</#list>
 	</div>

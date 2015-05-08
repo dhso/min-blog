@@ -33,7 +33,7 @@
 								</div>
 								</@shiro.hasPermission>
 								<p>
-									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleUpdateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
+									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleCreateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
 								</p>
 							</div>
 							<div class="item-content">
@@ -86,5 +86,6 @@
 
 	</div>
 	<#include "/cms/common/_foot.htm" encoding="UTF-8">
+	<#include "/cms/common/footer.htm" encoding="UTF-8">
 </body>
 </html>

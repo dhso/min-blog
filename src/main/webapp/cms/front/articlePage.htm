@@ -36,11 +36,29 @@
 					</p>
 					<footer>
 						<p class="pull-right text-muted">
-							<span class="text-muted"><strong>发布时间：</strong>${article.articleUpdateDt}</span>
+							<span class="text-muted"><strong>发布时间：</strong>${article.articleCreateDt}</span>
 						</p>
 						<p class="text-important">
 							本文版权归&nbsp;<a href="###">${article.articleAuthor}</a>&nbsp;所有
 						</p>
+						<!-- 多说评论框 start -->
+						<div class="ds-thread" data-thread-key="${article.articleId}" data-title="${article.articleTitle}" data-url="${baseUrl}/articlePage?articleId=${article.articleId}"></div>
+						<!-- 多说评论框 end -->
+						<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+						<script type="text/javascript">
+							var duoshuoQuery = {
+								short_name : "maxws"
+							};
+							(function() {
+								var ds = document.createElement('script');
+								ds.type = 'text/javascript';
+								ds.async = true;
+								ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+								ds.charset = 'UTF-8';
+								(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+							})();
+						</script>
+						<!-- 多说公共JS代码 end -->
 					</footer>
 				</article>
 
@@ -49,6 +67,6 @@
 		</div>
 
 	</div>
-	<#include "/cms/common/_foot.htm" encoding="UTF-8">
+	<#include "/cms/common/_foot.htm" encoding="UTF-8"> <#include "/cms/common/footer.htm" encoding="UTF-8">
 </body>
 </html>

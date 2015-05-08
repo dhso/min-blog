@@ -17,6 +17,7 @@ import com.minws.frame.kit.StringKit;
 import com.minws.frame.sdk.ueditor.UeditorKit;
 import com.minws.model.cms.Article;
 import com.minws.model.cms.Tag;
+import com.minws.model.sys.Config;
 import com.rsslibj.elements.Channel;
 
 public class CmsController extends Controller {
@@ -25,6 +26,7 @@ public class CmsController extends Controller {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
 		Integer pageSize = getParaToInt("pageSize", 10);
 		Integer tagId = getParaToInt("tagId", -1);
+
 		if (tagId == -1) {
 			setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
 		} else {
@@ -33,6 +35,7 @@ public class CmsController extends Controller {
 		}
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
 		render("front/articleList.htm");
 	}
 
@@ -44,7 +47,14 @@ public class CmsController extends Controller {
 		}
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
 		render("front/articlePage.htm");
+	}
+
+	public void tagsWall() {
+		setAttr("tagList", Tag.dao.getTags());
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		render("front/tagsWall.htm");
 	}
 
 	@ActionKey("back/ueditor")
@@ -57,6 +67,7 @@ public class CmsController extends Controller {
 	@RequiresPermissions("cms:article:add")
 	public void addArticle() {
 		setAttr("tagList", Tag.dao.getTags());
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
 		render("back/addArticle.htm");
 	}
 
@@ -75,7 +86,7 @@ public class CmsController extends Controller {
 			setAttr("article", Article.dao.getArticleByArticleId(articleId));
 		}
 		setAttr("tagList", Tag.dao.getTags());
-		render("back/editArticle.htm");
+		redirect("back/article/edit?articleId=" + String.valueOf(articleId));
 	}
 
 	@ActionKey("back/article/edit")
@@ -86,6 +97,7 @@ public class CmsController extends Controller {
 			setAttr("article", Article.dao.getArticleByArticleId(articleId));
 		}
 		setAttr("tagList", Tag.dao.getTags());
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
 		render("back/editArticle.htm");
 	}
 

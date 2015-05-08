@@ -1,6 +1,5 @@
 body {
 	font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-	background-color: #eee;
 	background-image: url('../img/gray.png');
 	background-repeat: repeat;
 }
@@ -29,6 +28,17 @@ body {
 	box-shadow: 1px 1px 1px #ccc;
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
+}
+
+.footer-fixed-center {
+	margin: 0 auto;
+	top: 50px;
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	color: #ccc;
+	text-align: center;
+	text-shadow: 1px 1px 0px #fff;
 }
 
 .main-container .items .item {
@@ -87,6 +97,19 @@ body {
 	background-color: white;
 }
 
+.tagsWall {
+	margin: 10px 15px;
+	min-height: 420px;
+}
+
+.tagsWall .label {
+	font-size: 16px;
+}
+
+.tagsWall a:hover {
+	font-size: 18px;
+}
+
 @media ( min-width : 768px) {
 	.navbar-fixed-center {
 		max-width: 740px;
@@ -100,6 +123,9 @@ body {
 	}
 	.sidebar-container .panel {
 		width: 182px;
+	}
+	.footer-fixed-center {
+		max-width: 740px;
 	}
 }
 
@@ -117,6 +143,9 @@ body {
 	.sidebar-container .panel {
 		width: 230px;
 	}
+	.footer-fixed-center {
+		max-width: 960px;
+	}
 }
 
 @media ( min-width : 1200px) {
@@ -132,5 +161,8 @@ body {
 	}
 	.sidebar-container .panel {
 		width: 290px;
+	}
+	.footer-fixed-center {
+		max-width: 1160px;
 	}
 }
