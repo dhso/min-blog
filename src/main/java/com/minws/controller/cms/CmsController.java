@@ -80,13 +80,15 @@ public class CmsController extends Controller {
 		String editorValue = getPara("editorValue").replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
 		String articleTag = getPara("articleTag");
 		if (articleId == -1) {
-			setAttr("article", Article.dao.addArticle(articleTitle, editorValue, articleTag));
+			Record article = Article.dao.addArticle(articleTitle, editorValue, articleTag);
+			setAttr("article", article);
+			articleId = article.getInt("articleId");
 		} else {
 			Article.dao.updateArticle(articleId, articleTitle, editorValue, articleTag);
 			setAttr("article", Article.dao.getArticleByArticleId(articleId));
 		}
 		setAttr("tagList", Tag.dao.getTags());
-		redirect("back/article/edit?articleId=" + String.valueOf(articleId));
+		redirect("/back/article/edit?articleId=" + String.valueOf(articleId));
 	}
 
 	@ActionKey("back/article/edit")
