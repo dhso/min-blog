@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `cms_articles` (
   `article_content` text NOT NULL,
   `article_author` varchar(50) DEFAULT '匿名',
   `article_view` int(11) DEFAULT '0',
-  `create_dt` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_dt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `create_dt` datetime DEFAULT NULL,
+  `update_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='博客文章';
 
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `cms_tags`;
 CREATE TABLE IF NOT EXISTS `cms_tags` (
   `tag_id` int(11) NOT NULL AUTO_INCREMENT,
   `tag_name` varchar(50) NOT NULL DEFAULT ' ',
-  `update_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='博客标签';
 
