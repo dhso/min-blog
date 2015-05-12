@@ -105,7 +105,7 @@ public class Article extends Model<Article> {
 	}
 
 	public Page<Record> getArticlesBySearch(Integer pageNumber, Integer pageSize, String searchKey) {
-		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticlesBySearch"), SqlKit.sql("cms.getArticlesBySearchEx"), searchKey);
+		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticlesBySearch"), SqlKit.sql("cms.getArticlesBySearchEx"), searchKey, searchKey);
 	}
 
 }
