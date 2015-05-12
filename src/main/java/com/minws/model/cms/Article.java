@@ -64,7 +64,7 @@ public class Article extends Model<Article> {
 				tagsId.add(tagId);
 			}
 		}
-		Db.update(SqlKit.sql("cms.addArticle"), articleTitle, editorValue, SecurityUtils.getSubject().getPrincipal().toString(), new Date());
+		Db.update(SqlKit.sql("cms.addArticle"), articleTitle, editorValue, SecurityUtils.getSubject().getPrincipal().toString(), new Date(), new Date());
 		Integer articleId = Db.findFirst("select article_id from cms_articles where article_title = ? and article_author = ? order by create_dt desc", articleTitle, SecurityUtils.getSubject().getPrincipal().toString()).getInt("article_id");
 		Iterator<Integer> tagsIt = tagsId.iterator();
 		while (tagsIt.hasNext()) {
@@ -77,7 +77,7 @@ public class Article extends Model<Article> {
 	public void updateArticle(Integer articleId, String articleTitle, String editorValue, String articleTag) {
 		List<String> tags = Arrays.asList(articleTag.split(","));
 		List<Integer> tagsId = new ArrayList<Integer>();
-		Db.update(SqlKit.sql("cms.updateArticle"), articleTitle, editorValue, articleId);
+		Db.update(SqlKit.sql("cms.updateArticle"), articleTitle, editorValue, new Date(), articleId);
 		Db.update("delete from cms_article_tag where article_id = ?", articleId);
 		Iterator<String> it = tags.iterator();
 		while (it.hasNext()) {
@@ -97,6 +97,11 @@ public class Article extends Model<Article> {
 		while (tagsIt.hasNext()) {
 			Db.update("insert into cms_article_tag (article_id,tag_id) values(?,?)", articleId, tagsIt.next());
 		}
+	}
+
+	public void deleteArticle(Integer articleId) {
+		Db.update("delete from cms_articles where article_id = ?", articleId);
+		Db.update("delete from cms_article_tag where article_id = ?", articleId);
 	}
 
 }

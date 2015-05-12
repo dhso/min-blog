@@ -1,0 +1,39 @@
+<#assign head_title = "信息页">
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><#include "/cms/common/_head.htm" encoding="UTF-8">
+</head>
+<body>
+	<#include "/cms/common/header.htm" encoding="UTF-8">
+	<div class="container">
+
+		<ul class="breadcrumb breadcrumb-block">
+			<li><i class="icon-location-arrow icon-muted"></i></li>
+			<li><a href="${baseUrl}/index">首页</a></li>
+			<li>信息页</li>
+		</ul>
+
+		<div class="messagePage">
+			<#if message??>
+			<div class="alert with-icon alert-${message.msgType}">
+				<#if message.msgType == 'success'>
+				<i class="icon-smile"></i>
+				<#elseif  message.msgType == 'danger'>
+				<i class="icon-frown"></i>
+				<#else>
+				<i class="icon-meh"></i>
+				</#if>
+				<div class="content">
+					<p><strong>Code：</strong>${message.msgCode}</p>
+					<p><strong>Type：</strong>${message.msgType}</p>
+					<p><strong>Desc：</strong>${message.msgDesc}</p>
+				</div>
+			</div>
+			</#if>
+			<h4 class="pull-right"><a href="${baseUrl}/index"><i class="icon-reply-all"></i>&nbsp;点此返回首页</a></h4>
+		</div>
+	</div>
+	<#include "/cms/common/_foot.htm" encoding="UTF-8">
+	<#include "/cms/common/footer.htm" encoding="UTF-8">
+</body>
+</html>

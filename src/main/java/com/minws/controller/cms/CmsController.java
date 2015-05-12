@@ -5,14 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.json.JSONException;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
+import com.jfinal.ext.kit.ServletKit;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.minws.entity.sys.Message;
 import com.minws.frame.kit.StringKit;
 import com.minws.frame.sdk.ueditor.UeditorKit;
 import com.minws.model.cms.Article;
@@ -21,6 +24,22 @@ import com.minws.model.sys.Config;
 import com.rsslibj.elements.Channel;
 
 public class CmsController extends Controller {
+
+	public void error404() {
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
+		setAttr("message", new Message("404", "danger", "555~~ 页面不存在！"));
+		render("front/message.htm", 404);
+	}
+
+	public void error500() {
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
+		setAttr("message", new Message("500", "danger", "555~~ 页面错误，请报告管理员！"));
+		render("front/message.htm", 500);
+	}
 
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
@@ -36,24 +55,36 @@ public class CmsController extends Controller {
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
 		render("front/articleList.htm");
 	}
 
 	public void articlePage() {
 		Integer articleId = getParaToInt("articleId", -1);
+		Record article = null;
 		if (articleId != -1) {
 			Article.dao.updateArticleView(articleId);
-			setAttr("article", Article.dao.getArticleByArticleId(articleId));
+			article = Article.dao.getArticleByArticleId(articleId);
 		}
+		if (null == article) {
+			renderError(404, "error404");
+			return;
+		}
+		setAttr("article", article);
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
 		render("front/articlePage.htm");
 	}
 
 	public void tagsWall() {
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
 		render("front/tagsWall.htm");
 	}
 
@@ -68,11 +99,13 @@ public class CmsController extends Controller {
 	public void addArticle() {
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
 		render("back/addArticle.htm");
 	}
 
 	@ActionKey("back/article/submit")
-	@RequiresPermissions("cms:article:add")
+	@RequiresPermissions(value = { "cms:article:add", "cms:article:edit" }, logical = Logical.OR)
 	@Before(Tx.class)
 	public void submitArticle() {
 		Integer articleId = getParaToInt("articleId", -1);
@@ -81,26 +114,56 @@ public class CmsController extends Controller {
 		String articleTag = getPara("articleTag");
 		if (articleId == -1) {
 			Record article = Article.dao.addArticle(articleTitle, editorValue, articleTag);
-			setAttr("article", article);
 			articleId = article.getInt("articleId");
+			redirect("/back/article/edit?articleId=" + String.valueOf(articleId) + "&type=add");
 		} else {
 			Article.dao.updateArticle(articleId, articleTitle, editorValue, articleTag);
-			setAttr("article", Article.dao.getArticleByArticleId(articleId));
+			redirect("/back/article/edit?articleId=" + String.valueOf(articleId) + "&type=update");
 		}
-		setAttr("tagList", Tag.dao.getTags());
-		redirect("/back/article/edit?articleId=" + String.valueOf(articleId));
+
 	}
 
 	@ActionKey("back/article/edit")
 	@RequiresPermissions("cms:article:edit")
 	public void editArticle() {
 		Integer articleId = getParaToInt("articleId", -1);
+		String type = getPara("type", "");
 		if (articleId != -1) {
 			setAttr("article", Article.dao.getArticleByArticleId(articleId));
 		}
+		if ("add".equalsIgnoreCase(type)) {
+			setAttr("message", new Message("200", "success", "添加文章成功！"));
+		} else if ("update".equalsIgnoreCase(type)) {
+			setAttr("message", new Message("200", "success", "修改文章成功！"));
+		}
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
 		render("back/editArticle.htm");
+	}
+
+	@ActionKey("back/article/delete")
+	@RequiresPermissions("cms:article:delete")
+	@Before(Tx.class)
+	public void deleteArticle() {
+		Integer articleId = getParaToInt("articleId", -1);
+		if (articleId != -1) {
+			Article.dao.deleteArticle(articleId);
+			setAttr("message", new Message("200", "success", "删除文章成功！"));
+		} else {
+			setAttr("message", new Message("200", "error", "错误的文章ID！"));
+		}
+		render("front/message.htm");
+	}
+
+	@ActionKey("back/settingsPage")
+	@RequiresPermissions("cms:setting:edit")
+	public void settingsPage() {
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
+		render("back/settingsPage.htm");
 	}
 
 	public void rss() throws ParseException, InstantiationException, IllegalAccessException, ClassNotFoundException {

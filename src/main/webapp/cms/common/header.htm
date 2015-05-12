@@ -29,9 +29,11 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<@shiro.authenticated>
-					<li><a href="${baseUrl}/back/article/add"><i class="icon-edit"></i>&nbsp;写文章</a></li>
+					<li class="<#if page_type == 'addArticle' || page_type == 'editArticle'>active</#if>"><a href="${baseUrl}/back/article/add"><i class="icon-edit"></i>&nbsp;写文章</a></li>
 				</@shiro.authenticated>
-				<li><a href="#"><i class="icon-cog"></i>&nbsp;配置</a></li>
+				<@shiro.hasPermission name="cms:setting:edit">
+					<li class="<#if page_type == 'settingsPage'>active</#if>"><a href="${baseUrl}/back/settingsPage"><i class="icon-cog"></i>&nbsp;设置</a></li>
+				</@shiro.hasPermission>
 				<@shiro.authenticated>
 					<li><a href="${baseUrl}/security/signout"><i class="icon-off"></i>&nbsp;退出</a></li>
 				</@shiro.authenticated>

@@ -27,11 +27,14 @@
 								<h4>
 									<span class="text-primary"><i class="icon-file-text"></i>&nbsp; <a href="${baseUrl}/articlePage?articleId=${article.articleId}">${article.articleTitle}</a></span>
 								</h4>
-								<@shiro.hasPermission name="cms:article:edit">
 								<div class="pull-right">
-									<a href="${baseUrl}/back/article/edit?articleId=${article.articleId}" class="text-muted"><i class="icon-pencil"></i>&nbsp;编辑</a>
+									<@shiro.hasPermission name="cms:article:edit">
+									<a href="${baseUrl}/back/article/edit?articleId=${article.articleId}" class="text-primary"><i class="icon-pencil"></i>&nbsp;编辑</a>&nbsp;
+									</@shiro.hasPermission>
+									<@shiro.hasPermission name="cms:article:delete">
+									<a href="${baseUrl}/back/article/delete?articleId=${article.articleId}" class="text-danger"><i class="icon-remove"></i>&nbsp;删除</a>&nbsp;
+									</@shiro.hasPermission>
 								</div>
-								</@shiro.hasPermission>
 								<p>
 									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleCreateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
 								</p>

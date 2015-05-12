@@ -43,8 +43,8 @@ public class BaseConfig extends JFinalConfig {
 		cs.setDevMode(getPropertyToBoolean("wx.devMode"));
 		cs.setError401View("/security/signin");
 		cs.setError403View("/security/signin");
-		cs.setError404View("/security/err404");
-		cs.setError500View("/security/err500");
+		cs.setError404View("/error404");
+		cs.setError500View("/error500");
 		cs.setErrorRenderFactory(new IErrorRenderFactory() {
 			@Override
 			public Render getRender(int errorCode, String view) {
@@ -111,5 +111,6 @@ public class BaseConfig extends JFinalConfig {
 			HttpKit.setProxy(getProperty("wx.proxy.http.host"), getProperty("wx.proxy.http.port"), getProperty("wx.proxy.auth.username"), getProperty("wx.proxy.auth.password"));
 		super.afterJFinalStart();
 		FreeMarkerRender.getConfiguration().setSharedVariable("shiro", new FreemarketShiroTags());
+		FreeMarkerRender.getConfiguration().setClassicCompatible(true);
 	}
 }

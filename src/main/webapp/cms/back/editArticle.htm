@@ -16,6 +16,12 @@
 			<li class="active">编辑文章</li>
 		</ul>
 		<div class="editorFrom">
+			<#if message??>
+				<div class="alert alert-${message.msgType} alert-link alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<p><strong>${message.msgType}：</strong> ${message.msgDesc}&nbsp;<strong><a href="${baseUrl}/articlePage?articleId=${article.articleId}" target="_blank">查看文章</a></strong></p>
+				</div>
+			</#if>
 			<form method="post" action="${baseUrl}/back/article/submit?articleId=${article.articleId}">
 				<div class="input-group">
 					<span class="input-group-addon">文章标题</span> <input type="text" class="form-control" name="articleTitle" value="${article.articleTitle}" placeholder="文章标题">
@@ -30,6 +36,7 @@
 
 	</div>
 	<#include "/cms/common/_foot.htm" encoding="UTF-8">
+	<#include "/cms/common/footer.htm" encoding="UTF-8">
 	<script type="text/javascript" charset="utf-8" src="${baseUrl}/static/lib/ueditor/ueditor.config.js"></script>
 	<script type="text/javascript" charset="utf-8" src="${baseUrl}/static/lib/ueditor/ueditor.all.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="${baseUrl}/static/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
