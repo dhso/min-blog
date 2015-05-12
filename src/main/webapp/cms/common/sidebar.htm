@@ -1,3 +1,8 @@
+<div class="input-group panel">
+	<span class="input-group-addon"><i class="icon-search"></i></span> <input type="text" class="form-control" id="searchKey" onkeypress="if(event.keyCode==13) {document.getElementById('searchKeyButton').click();return false;}"> <span class="input-group-btn">
+		<button class="btn btn-default" id="searchKeyButton" type="button" onclick="var searchKey = document.getElementById('searchKey').value;if(!searchKey){document.getElementById('searchKey').focus();}else{window.location.href='${baseUrl}/search?searchKey='+searchKey;}">搜索</button>
+	</span>
+</div>
 <div class="panel">
 	<div class="panel-heading">
 		<span class="text-muted"><i class="icon-tags"></i>&nbsp;文章标签</span> <span class="pull-right"><a href="${baseUrl}/tagsWall" class="text-danger">所有标签&nbsp;<i class="icon-double-angle-right"></i></a></span>
@@ -16,5 +21,18 @@
 			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><small class="text-warning">[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
 		</p>
 		</#list>
+	</div>
+</div>
+<div class="panel">
+	<div class="panel-heading">
+		<span class="text-muted"><i class="icon-comments-alt"></i>&nbsp;最近访客</span>
+	</div>
+	<div class="panel-body">
+		<!-- 多说最近访客 start -->
+		<ul class="ds-recent-visitors" data-num-items="10"></ul>
+		<!-- 多说最近访客 end -->
+		<!-- 多说最新评论 start -->
+		<div class="ds-recent-comments" data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-title="1" data-show-admin="1" data-excerpt-length="70"></div>
+		<!-- 多说最新评论 end -->
 	</div>
 </div>

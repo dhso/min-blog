@@ -13,14 +13,14 @@
 			<li>设置页</li>
 		</ul>
 
-		<div class="clearfix tagsWall">
+		<div class="clearfix messagePage">
 			<div class="alert with-icon alert-warning">
 				<i class="icon-smile"></i>
 				<div class="content">
 					本博客使用<strong>&nbsp;标签墙&nbsp;</strong>来<strong>&nbsp;快速分类&nbsp;</strong>。
 				</div>
 			</div>
-			<#list tagList as tag> <#if tag.tagId%6 == 0> <a class="label label-default" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 1> <a class="label label-primary" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 2> <a class="label label-success" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 3> <a class="label label-info" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 4> <a class="label label-warning" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> <#elseif tag.tagId%6 == 5> <a class="label label-danger" href="${baseUrl}/tag?tagId=${tag.tagId}">${tag.tagName}</a> </#if> </#list>
+			
 		</div>
 
 	</div>

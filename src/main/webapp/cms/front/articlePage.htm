@@ -23,7 +23,7 @@
 							<i class="icon-file-text"></i>&nbsp;${article.articleTitle}
 						</h4>
 						<section class="abstract">
-							<span class="text-muted"><i class="icon-user"></i>&nbsp;<strong>作者：</strong>${article.articleAuthor}</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-eye-open"></i>&nbsp;<strong>浏览量：</strong>${article.articleView}</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-comments"></i>&nbsp;<strong>评论数：</strong><a href="#">243</a></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-time"></i>&nbsp;<strong>时间：</strong>${article.articleUpdateDt}</span>
+							<span class="text-muted"><i class="icon-user"></i>&nbsp;<strong>作者：</strong>${article.articleAuthor}</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-eye-open"></i>&nbsp;<strong>浏览量：</strong>${article.articleView}</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-comments"></i>&nbsp;<strong>评论数：</strong><a href="#comment"><span class="ds-thread-count" data-thread-key="${article.articleId}" data-count-type="comments">0</span></a></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted"><i class="icon-time"></i>&nbsp;<strong>时间：</strong>${article.articleUpdateDt}</span>
 							<div class="pull-right">
 								<@shiro.hasPermission name="cms:article:edit">
 								<a href="${baseUrl}/back/article/edit?articleId=${article.articleId}" class="text-primary"><i class="icon-pencil"></i>&nbsp;编辑</a>&nbsp;
@@ -42,24 +42,31 @@
 						<p class="text-important">
 							本文版权归&nbsp;<a href="###">${article.articleAuthor}</a>&nbsp;所有<br> 转载请保留链接：<a href="${fullUrl}">${fullUrl}</a>
 						</p>
-						<!-- 多说评论框 start -->
-						<div class="ds-thread" data-thread-key="${article.articleId}" data-title="${article.articleTitle}" data-url="${fullUrl}"></div>
-						<!-- 多说评论框 end -->
-						<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-						<script type="text/javascript">
-							var duoshuoQuery = {
-								short_name : "maxws"
-							};
-							(function() {
-								var ds = document.createElement('script');
-								ds.type = 'text/javascript';
-								ds.async = true;
-								ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-								ds.charset = 'UTF-8';
-								(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-							})();
-						</script>
-						<!-- 多说公共JS代码 end -->
+						<div id="share">
+							<#assign articleContentFormat = article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")> <#if articleContentFormat?length lt 200 >
+							<div class="ds-share flat" data-thread-key="${article.articleId}" data-title="${article.articleTitle}" data-images="" data-content="${articleContentFormat}" data-url="${fullUrl}">
+							<#else>
+							<div class="ds-share flat" data-thread-key="${article.articleId}" data-title="${article.articleTitle}" data-images="" data-content="${articleContentFormat[0..200]}... " data-url="${fullUrl}">
+							</#if>
+								<div class="ds-share-inline">
+									<ul class="ds-share-icons-16">
+										<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+										<li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+										<li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+										<li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+										<li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+										<li><a class="ds-renren" href="javascript:void(0);" data-service="renren">人人网</a></li>
+										<li><a class="ds-qq" href="javascript:void(0);" data-service="qq">QQ</a></li>
+									</ul>
+									<div class="ds-share-icons-more"></div>
+								</div>
+							</div>
+						</div>
+						<div id="comment">
+							<!-- 多说评论框 start -->
+							<div class="ds-thread" data-thread-key="${article.articleId}" data-title="${article.articleTitle}" data-url="${fullUrl}"></div>
+							<!-- 多说评论框 end -->
+						</div>
 					</footer>
 				</article>
 

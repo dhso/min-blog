@@ -12,7 +12,10 @@
 			<li><a href="${baseUrl}/index">首页</a></li>
 			<li><a href="${baseUrl}/index">文章列表</a></li>
 			<#if breadcrumbTag??>
-			<li><a href="${baseUrl}/index?tagId=${breadcrumbTag.tagId}">${breadcrumbTag.tagName}</a></li>
+			<li><a href="${baseUrl}/tag?tagId=${breadcrumbTag.tagId}">${breadcrumbTag.tagName}</a></li>
+			</#if>
+			<#if breadcrumbSearch??>
+			<li><a href="${baseUrl}/search?searchKey=${breadcrumbSearch}">与 ${breadcrumbSearch} 相关的文章</a></li>
 			</#if>
 			<li class="active">第&nbsp;${articlePage.pageNumber}&nbsp;页</li>
 		</ul>
@@ -36,7 +39,7 @@
 									</@shiro.hasPermission>
 								</div>
 								<p>
-									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleCreateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="#" class="text-muted"><i class="icon-comments"></i>&nbsp;243</a>
+									<span class="text-muted"><i class="icon-user"></i>&nbsp;${article.articleAuthor}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-time"></i>&nbsp;${article.articleCreateDt}</span>&nbsp;&nbsp; <span class="text-muted"><i class="icon-eye-open"></i>&nbsp;${article.articleView}</span>&nbsp;&nbsp; <a href="${baseUrl}/articlePage?articleId=${article.articleId}#comment" class="text-muted"><i class="icon-comments"></i>&nbsp;<span class="ds-thread-count" data-thread-key="${article.articleId}" data-count-type="comments">0</span></a>
 								</p>
 							</div>
 							<div class="item-content">

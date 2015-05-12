@@ -31,7 +31,7 @@ public class Article extends Model<Article> {
 		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticles"), SqlKit.sql("cms.getArticlesEx"));
 	}
 
-	public Page<Record> getArticles(Integer pageNumber, Integer pageSize, Integer tagId) {
+	public Page<Record> getArticlesByTagId(Integer pageNumber, Integer pageSize, Integer tagId) {
 		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticlesByTagId"), SqlKit.sql("cms.getArticlesByTagIdEx"), tagId);
 	}
 
@@ -102,6 +102,10 @@ public class Article extends Model<Article> {
 	public void deleteArticle(Integer articleId) {
 		Db.update("delete from cms_articles where article_id = ?", articleId);
 		Db.update("delete from cms_article_tag where article_id = ?", articleId);
+	}
+
+	public Page<Record> getArticlesBySearch(Integer pageNumber, Integer pageSize, String searchKey) {
+		return Db.paginate(pageNumber, pageSize, SqlKit.sql("cms.getArticlesBySearch"), SqlKit.sql("cms.getArticlesBySearchEx"), searchKey);
 	}
 
 }

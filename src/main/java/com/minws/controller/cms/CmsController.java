@@ -13,6 +13,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.kit.ServletKit;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.minws.entity.sys.Message;
@@ -44,14 +45,51 @@ public class CmsController extends Controller {
 	public void index() {
 		Integer pageNumber = getParaToInt("pageNumber", 1);
 		Integer pageSize = getParaToInt("pageSize", 10);
-		Integer tagId = getParaToInt("tagId", -1);
+		setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
+		setAttr("tagList", Tag.dao.getTags());
+		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
+		render("front/articleList.htm");
+	}
 
-		if (tagId == -1) {
-			setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize));
-		} else {
-			setAttr("articlePage", Article.dao.getArticles(pageNumber, pageSize, tagId));
-			setAttr("breadcrumbTag", Tag.dao.getTagByTagId(tagId));
+	public void tag() {
+		Integer pageNumber = getParaToInt("pageNumber", 1);
+		Integer pageSize = getParaToInt("pageSize", 10);
+		Integer tagId = getParaToInt("tagId", -1);
+		if (tagId != -1) {
+			Page<Record> articlePage = Article.dao.getArticlesByTagId(pageNumber, pageSize, tagId);
+			if (articlePage.getList().size() == 0) {
+				setAttr("message", new Message("200", "warning", "没有找到标签ID为 " + tagId + " 的文章！"));
+				render("front/message.htm");
+				return;
+			}
+			setAttr("articlePage", articlePage);
 		}
+		setAttr("breadcrumbTag", Tag.dao.getTagByTagId(tagId));
+		setAttr("tagList", Tag.dao.getTags());
+		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
+		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));
+		setAttr("request", getRequest());
+		setAttr("fullUrl", ServletKit.getUrl(getRequest()));
+		render("front/articleList.htm");
+	}
+
+	public void search() {
+		Integer pageNumber = getParaToInt("pageNumber", 1);
+		Integer pageSize = getParaToInt("pageSize", 10);
+		String searchKey = getPara("searchKey", "");
+		if (StringKit.isNotBlank(searchKey)) {
+			Page<Record> articlePage = Article.dao.getArticlesBySearch(pageNumber, pageSize, "%".concat(searchKey).concat("%"));
+			if (articlePage.getList().size() == 0) {
+				setAttr("message", new Message("200", "warning", "没有搜索到与  " + searchKey + " 相关的文章！"));
+				render("front/message.htm");
+				return;
+			}
+			setAttr("articlePage", articlePage);
+		}
+		setAttr("breadcrumbSearch", searchKey);
 		setAttr("tagList", Tag.dao.getTags());
 		setAttr("popularArticleList", Article.dao.getPopularArticles(5));
 		setAttr("cmsName", Config.dao.getValueByKey("cms_name"));

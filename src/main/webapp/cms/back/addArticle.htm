@@ -15,9 +15,9 @@
 			<li class="active">新文章</li>
 		</ul>
 		<div class="editorFrom">
-			<form method="post" action="${baseUrl}/back/article/submit">
+			<form method="post" action="${baseUrl}/back/article/submit" onsubmit="return checkSubmit();">
 				<div class="input-group">
-					<span class="input-group-addon">文章标题</span> <input type="text" class="form-control" name="articleTitle" placeholder="文章标题">
+					<span class="input-group-addon">文章标题</span> <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="文章标题">
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">文章标签</span> <input type="text" class="form-control" name="articleTag" id="tagEditor">
@@ -62,6 +62,12 @@
 				placeholder : '请输入TAG'
 			});
 		});
+		function checkSubmit(){
+			if(!$('#articleTitle').val()){
+				$('#articleTitle').focus();
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>
