@@ -33,19 +33,8 @@
         , serverUrl: URL + "ueditor"
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
-        , toolbars: [[
-            'fullscreen', 'source', '|', 'undo', 'redo', '|',
-            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
-            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-            'directionalityltr', 'directionalityrtl', 'indent', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
-            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
-            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
-            'print', 'preview', 'searchreplace', 'help', 'drafts'
-        ]]
+        
+        , toolbars: [["tmp_downloadhelper_iframe","source","cleardoc","undo","redo","background","selectall","autotypeset","formatmatch","pasteplain","drafts","removeformat","searchreplace","preview","print"],["inserttable","deletetable","mergeright","mergedown","splittorows","splittocols","splittocells","mergecells","insertparagraphbeforetable","insertcol","insertrow","deleterow","deletecol","charts"],["link","unlink","anchor","attachment","insertimage","scrawl","insertvideo","music","emotion","spechars","horizontal","insertframe","webapp","map","template","pagebreak","insertcode"],["fontsize","fontfamily","paragraph","bold","italic","underline","fontborder","backcolor","strikethrough","forecolor","tolowercase","touppercase","superscript","subscript","justifyleft","justifycenter","justifyright","justifyjustify","lineheight","rowspacingtop","rowspacingbottom","directionalityltr","directionalityrtl","indent","blockquote","insertunorderedlist","insertorderedlist"]]
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -85,10 +74,6 @@
 
         //,iframeCssUrl: URL + '/themes/iframe.css' //给编辑器内部引入一个css文件
 
-        //indentValue
-        //首行缩进距离,默认是2em
-        //,indentValue:'2em'
-
         //,initialFrameWidth:1000  //初始化编辑器宽度,默认1000
         //,initialFrameHeight:320  //初始化编辑器高度,默认320
 
@@ -101,12 +86,7 @@
         //自动保存间隔时间， 单位ms
         //,saveInterval: 500
 
-        //,fullscreen : false //是否开启初始化时即全屏，默认关闭
-
         //,imagePopup:true      //图片操作的浮层开关，默认打开
-
-        //,autoSyncData:true //自动同步编辑器要提交的数据
-        //,emotionLocalization:false //是否开启表情本地化，默认关闭。若要开启请确保emotion文件夹下包含官网提供的images表情文件夹
 
         //粘贴只保留标签，去除标签所有属性
         //,retainOnlyLabelPasted: false
@@ -142,90 +122,7 @@
 
         //,allHtmlEnabled:false //提交到后台的数据是否包含整个html字符串
 
-        //insertorderedlist
-        //有序列表的下拉配置,值留空时支持多语言自动识别，若配置值，则以此值为准
-        //,'insertorderedlist':{
-        //      //自定的样式
-        //        'num':'1,2,3...',
-        //        'num1':'1),2),3)...',
-        //        'num2':'(1),(2),(3)...',
-        //        'cn':'一,二,三....',
-        //        'cn1':'一),二),三)....',
-        //        'cn2':'(一),(二),(三)....',
-        //     //系统自带
-        //     'decimal' : '' ,         //'1,2,3...'
-        //     'lower-alpha' : '' ,    // 'a,b,c...'
-        //     'lower-roman' : '' ,    //'i,ii,iii...'
-        //     'upper-alpha' : '' , lang   //'A,B,C'
-        //     'upper-roman' : ''      //'I,II,III...'
-        //}
-
-        //insertunorderedlist
-        //无序列表的下拉配置，值留空时支持多语言自动识别，若配置值，则以此值为准
-        //,insertunorderedlist : { //自定的样式
-        //    'dash' :'— 破折号', //-破折号
-        //    'dot':' 。 小圆圈', //系统自带
-        //    'circle' : '',  // '○ 小圆圈'
-        //    'disc' : '',    // '● 小圆点'
-        //    'square' : ''   //'■ 小方块'
-        //}
-        //,listDefaultPaddingLeft : '30'//默认的左边缩进的基数倍
-        //,listiconpath : 'http://bs.baidu.com/listicon/'//自定义标号的路径
-        //,maxListLevel : 3 //限制可以tab的级数, 设置-1为不限制
-
         //,autoTransWordToList:false  //禁止word中粘贴进来的列表自动变成列表标签
-
-        //fontfamily
-        //字体设置 label留空支持多语言自动切换，若配置，则以配置值为准
-        //,'fontfamily':[
-        //    { label:'',name:'songti',val:'宋体,SimSun'},
-        //    { label:'',name:'kaiti',val:'楷体,楷体_GB2312, SimKai'},
-        //    { label:'',name:'yahei',val:'微软雅黑,Microsoft YaHei'},
-        //    { label:'',name:'heiti',val:'黑体, SimHei'},
-        //    { label:'',name:'lishu',val:'隶书, SimLi'},
-        //    { label:'',name:'andaleMono',val:'andale mono'},
-        //    { label:'',name:'arial',val:'arial, helvetica,sans-serif'},
-        //    { label:'',name:'arialBlack',val:'arial black,avant garde'},
-        //    { label:'',name:'comicSansMs',val:'comic sans ms'},
-        //    { label:'',name:'impact',val:'impact,chicago'},
-        //    { label:'',name:'timesNewRoman',val:'times new roman'}
-        //]
-
-        //fontsize
-        //字号
-        //,'fontsize':[10, 11, 12, 14, 16, 18, 20, 24, 36]
-
-        //paragraph
-        //段落格式 值留空时支持多语言自动识别，若配置，则以配置值为准
-        //,'paragraph':{'p':'', 'h1':'', 'h2':'', 'h3':'', 'h4':'', 'h5':'', 'h6':''}
-
-        //rowspacingtop
-        //段间距 值和显示的名字相同
-        //,'rowspacingtop':['5', '10', '15', '20', '25']
-
-        //rowspacingBottom
-        //段间距 值和显示的名字相同
-        //,'rowspacingbottom':['5', '10', '15', '20', '25']
-
-        //lineheight
-        //行内间距 值和显示的名字相同
-        //,'lineheight':['1', '1.5','1.75','2', '3', '4', '5']
-
-        //customstyle
-        //自定义样式，不支持国际化，此处配置值即可最后显示值
-        //block的元素是依据设置段落的逻辑设置的，inline的元素依据BIU的逻辑设置
-        //尽量使用一些常用的标签
-        //参数说明
-        //tag 使用的标签名字
-        //label 显示的名字也是用来标识不同类型的标识符，注意这个值每个要不同，
-        //style 添加的样式
-        //每一个对象就是一个自定义的样式
-        //,'customstyle':[
-        //    {tag:'h1', name:'tc', label:'', style:'border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:center;margin:0 0 20px 0;'},
-        //    {tag:'h1', name:'tl',label:'', style:'border-bottom:#ccc 2px solid;padding:0 4px 0 0;margin:0 0 10px 0;'},
-        //    {tag:'span',name:'im', label:'', style:'font-style:italic;font-weight:bold'},
-        //    {tag:'span',name:'hi', label:'', style:'font-style:italic;font-weight:bold;color:rgb(51, 153, 204)'}
-        //]
 
         //打开右键菜单功能
         //,enableContextMenu: true
@@ -293,10 +190,6 @@
         //编辑器底部距离工具栏高度(如果参数大于等于编辑器高度，则设置无效)
         //,toolbarTopOffset:400
 
-        //pageBreakTag
-        //分页标识符,默认是_ueditor_page_break_tag_
-        //,pageBreakTag:'_ueditor_page_break_tag_'
-
         //autotypeset
         //自动排版参数
         //,autotypeset: {
@@ -317,12 +210,6 @@
         //    tobdc: false
         //}
 
-        //tableDragable
-        //表格是否可以拖拽
-        //,tableDragable: true
-
-        //,disabledTableInTable:true  //禁止表格嵌套
-
         //sourceEditor
         //源码的查看方式,codemirror 是代码高亮，textarea是文本框,默认是codemirror
         //注意默认codemirror只能在ie8+和非ie中使用
@@ -341,8 +228,6 @@
         //    'anchor':'~/dialogs/anchor/anchor.html',
         //}
 
-        //webAppKey 百度应用的APIkey，每个站长必须首先去百度官网注册一个key后方能正常使用app功能，注册介绍，http://app.baidu.com/static/cms/getapikey.html
-        //, webAppKey: ""
     };
 
     function getUEBasePath(docUrl, confUrl) {

@@ -1,5 +1,6 @@
 package com.minws.frame.sdk.ueditor.upload;
 
+import com.jfinal.ext.plugin.config.ConfigKit;
 import com.minws.frame.sdk.ueditor.define.AppInfo;
 import com.minws.frame.sdk.ueditor.define.BaseState;
 import com.minws.frame.sdk.ueditor.define.State;
@@ -29,8 +30,7 @@ public class StorageManager {
 		}
 
 		try {
-			BufferedOutputStream bos = new BufferedOutputStream(
-					new FileOutputStream(file));
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
 			bos.write(data);
 			bos.flush();
 			bos.close();
@@ -39,23 +39,21 @@ public class StorageManager {
 		}
 
 		state = new BaseState(true, file.getAbsolutePath());
-		state.putInfo( "size", data.length );
-		state.putInfo( "title", file.getName() );
+		state.putInfo("size", data.length);
+		state.putInfo("title", file.getName());
 		return state;
 	}
 
-	public static State saveFileByInputStream(InputStream is, String path,
-			long maxSize) {
+	public static State saveFileByInputStream(InputStream is, String path, long maxSize) {
 		State state = null;
 
 		File tmpFile = getTmpFile();
 
-		byte[] dataBuf = new byte[ 2048 ];
+		byte[] dataBuf = new byte[2048];
 		BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE);
 
 		try {
-			BufferedOutputStream bos = new BufferedOutputStream(
-					new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE);
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE);
 
 			int count = 0;
 			while ((count = bis.read(dataBuf)) != -1) {
@@ -76,7 +74,7 @@ public class StorageManager {
 			}
 
 			return state;
-			
+
 		} catch (IOException e) {
 		}
 		return new BaseState(false, AppInfo.IO_ERROR);
@@ -87,12 +85,11 @@ public class StorageManager {
 
 		File tmpFile = getTmpFile();
 
-		byte[] dataBuf = new byte[ 2048 ];
+		byte[] dataBuf = new byte[2048];
 		BufferedInputStream bis = new BufferedInputStream(is, StorageManager.BUFFER_SIZE);
 
 		try {
-			BufferedOutputStream bos = new BufferedOutputStream(
-					new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE);
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tmpFile), StorageManager.BUFFER_SIZE);
 
 			int count = 0;
 			while ((count = bis.read(dataBuf)) != -1) {
@@ -126,16 +123,22 @@ public class StorageManager {
 		if (targetFile.canWrite()) {
 			return new BaseState(false, AppInfo.PERMISSION_DENIED);
 		}
-		try {
-			FileUtils.moveFile(tmpFile, targetFile);
-		} catch (IOException e) {
-			return new BaseState(false, AppInfo.IO_ERROR);
-		}
 
+		if ("qiniu".equalsIgnoreCase(ConfigKit.getStr("ueditor.upload.to"))) {
+			if (!QiNiuUploader.uploadFile(tmpFile.getName(), tmpFile)) {
+				return new BaseState(false, AppInfo.IO_ERROR);
+			}
+		} else {
+			try {
+				FileUtils.moveFile(tmpFile, targetFile);
+			} catch (IOException e) {
+				return new BaseState(false, AppInfo.IO_ERROR);
+			}
+		}
 		state = new BaseState(true);
-		state.putInfo( "size", targetFile.length() );
-		state.putInfo( "title", targetFile.getName() );
-		
+		state.putInfo("size", targetFile.length());
+		state.putInfo("title", targetFile.getName());
+
 		return state;
 	}
 

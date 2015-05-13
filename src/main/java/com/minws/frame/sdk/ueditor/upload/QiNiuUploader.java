@@ -1,5 +1,6 @@
 package com.minws.frame.sdk.ueditor.upload;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -86,6 +87,24 @@ public class QiNiuUploader {
 		} catch (IOException e) {
 		}
 		return new BaseState(false, AppInfo.IO_ERROR);
+	}
+
+	/**
+	 * 上传文件
+	 * 
+	 * @param path
+	 * @param file
+	 * @return
+	 * @return
+	 */
+	public static boolean uploadFile(String path, File file) {
+		PutRet putRet = new QiniuKit(ConfigKit.getStr("wx.qiniu.ak"), ConfigKit.getStr("wx.qiniu.sk")).put(ConfigKit.getStr("wx.qiniu.bucket"), path, file);
+		if (putRet.ok()) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	private static boolean validType(String type, String[] allowTypes) {

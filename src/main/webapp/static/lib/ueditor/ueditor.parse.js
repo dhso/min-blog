@@ -1,11 +1,6 @@
-/*!
- * UEditor
- * version: ueditor
- * build: Thu May 29 2014 16:47:57 GMT+0800 (中国标准时间)
- */
-
 (function(){
 
+// parse.js
 (function(){
     UE = window.UE || {};
     var isIE = !!window.ActiveXObject;
@@ -334,48 +329,26 @@
     }
 })();
 
-UE.parse.register('insertcode',function(utils){
-    var pres = this.root.getElementsByTagName('pre');
-    if(pres.length){
-        if(typeof XRegExp == "undefined"){
-            var jsurl,cssurl;
-            if(this.rootPath !== undefined){
-                jsurl = utils.removeLastbs(this.rootPath)  + '/third-party/SyntaxHighlighter/shCore.js';
-                cssurl = utils.removeLastbs(this.rootPath) + '/third-party/SyntaxHighlighter/shCoreDefault.css';
-            }else{
-                jsurl = this.highlightJsUrl;
-                cssurl = this.highlightCssUrl;
-            }
-            utils.loadFile(document,{
-                id : "syntaxhighlighter_css",
-                tag : "link",
-                rel : "stylesheet",
-                type : "text/css",
-                href : cssurl
-            });
-            utils.loadFile(document,{
-                id : "syntaxhighlighter_js",
-                src : jsurl,
-                tag : "script",
-                type : "text/javascript",
-                defer : "defer"
-            },function(){
-                utils.each(pres,function(pi){
-                    if(pi && /brush/i.test(pi.className)){
-                        SyntaxHighlighter.highlight(pi);
-                    }
-                });
-            });
-        }else{
-            utils.each(pres,function(pi){
-                if(pi && /brush/i.test(pi.className)){
-                    SyntaxHighlighter.highlight(pi);
-                }
-            });
+
+// background.js
+UE.parse.register('background', function (utils) {
+    var me = this,
+        root = me.root,
+        p = root.getElementsByTagName('p'),
+        styles;
+
+    for (var i = 0,ci; ci = p[i++];) {
+        styles = ci.getAttribute('data-background');
+        if (styles){
+            ci.parentNode.removeChild(ci);
         }
     }
 
+    //追加默认的表格样式
+    styles && utils.cssRule('ueditor_background', me.selector + '{' + styles + '}', document);
 });
+
+// table.js
 UE.parse.register('table', function (utils) {
     var me = this,
         root = this.root,
@@ -537,6 +510,8 @@ UE.parse.register('table', function (utils) {
         }
     }
 });
+
+// charts.js
 UE.parse.register('charts',function( utils ){
 
     utils.cssRule('chartsContainerHeight','.edui-chart-container { height:'+(this.chartContainerHeight||300)+'px}');
@@ -874,22 +849,88 @@ UE.parse.register('charts',function( utils ){
     }
 
 });
-UE.parse.register('background', function (utils) {
-    var me = this,
-        root = me.root,
-        p = root.getElementsByTagName('p'),
-        styles;
 
-    for (var i = 0,ci; ci = p[i++];) {
-        styles = ci.getAttribute('data-background');
-        if (styles){
-            ci.parentNode.removeChild(ci);
+// video.js
+UE.parse.register('vedio',function(utils){
+    var video = this.root.getElementsByTagName('video'),
+        audio = this.root.getElementsByTagName('audio');
+
+    document.createElement('video');document.createElement('audio');
+    if(video.length || audio.length){
+        var sourcePath = utils.removeLastbs(this.rootPath),
+            jsurl = sourcePath + '/third-party/video-js/video.js',
+            cssurl = sourcePath + '/third-party/video-js/video-js.min.css',
+            swfUrl = sourcePath + '/third-party/video-js/video-js.swf';
+
+        if(window.videojs) {
+            videojs.autoSetup();
+        } else {
+            utils.loadFile(document,{
+                id : "video_css",
+                tag : "link",
+                rel : "stylesheet",
+                type : "text/css",
+                href : cssurl
+            });
+            utils.loadFile(document,{
+                id : "video_js",
+                src : jsurl,
+                tag : "script",
+                type : "text/javascript"
+            },function(){
+                videojs.options.flash.swf = swfUrl;
+                videojs.autoSetup();
+            });
+        }
+
+    }
+});
+
+// insertcode.js
+UE.parse.register('insertcode',function(utils){
+    var pres = this.root.getElementsByTagName('pre');
+    if(pres.length){
+        if(typeof XRegExp == "undefined"){
+            var jsurl,cssurl;
+            if(this.rootPath !== undefined){
+                jsurl = utils.removeLastbs(this.rootPath)  + '/third-party/SyntaxHighlighter/shCore.js';
+                cssurl = utils.removeLastbs(this.rootPath) + '/third-party/SyntaxHighlighter/shCoreDefault.css';
+            }else{
+                jsurl = this.highlightJsUrl;
+                cssurl = this.highlightCssUrl;
+            }
+            utils.loadFile(document,{
+                id : "syntaxhighlighter_css",
+                tag : "link",
+                rel : "stylesheet",
+                type : "text/css",
+                href : cssurl
+            });
+            utils.loadFile(document,{
+                id : "syntaxhighlighter_js",
+                src : jsurl,
+                tag : "script",
+                type : "text/javascript",
+                defer : "defer"
+            },function(){
+                utils.each(pres,function(pi){
+                    if(pi && /brush/i.test(pi.className)){
+                        SyntaxHighlighter.highlight(pi);
+                    }
+                });
+            });
+        }else{
+            utils.each(pres,function(pi){
+                if(pi && /brush/i.test(pi.className)){
+                    SyntaxHighlighter.highlight(pi);
+                }
+            });
         }
     }
 
-    //追加默认的表格样式
-    styles && utils.cssRule('ueditor_background', me.selector + '{' + styles + '}', document);
 });
+
+// list.js
 UE.parse.register('list',function(utils){
     var customCss = [],
         customStyle = {
@@ -984,39 +1025,7 @@ UE.parse.register('list',function(utils){
 
 
 });
-UE.parse.register('vedio',function(utils){
-    var video = this.root.getElementsByTagName('video'),
-        audio = this.root.getElementsByTagName('audio');
 
-    document.createElement('video');document.createElement('audio');
-    if(video.length || audio.length){
-        var sourcePath = utils.removeLastbs(this.rootPath),
-            jsurl = sourcePath + '/third-party/video-js/video.js',
-            cssurl = sourcePath + '/third-party/video-js/video-js.min.css',
-            swfUrl = sourcePath + '/third-party/video-js/video-js.swf';
 
-        if(window.videojs) {
-            videojs.autoSetup();
-        } else {
-            utils.loadFile(document,{
-                id : "video_css",
-                tag : "link",
-                rel : "stylesheet",
-                type : "text/css",
-                href : cssurl
-            });
-            utils.loadFile(document,{
-                id : "video_js",
-                src : jsurl,
-                tag : "script",
-                type : "text/javascript"
-            },function(){
-                videojs.options.flash.swf = swfUrl;
-                videojs.autoSetup();
-            });
-        }
-
-    }
-});
 
 })();
