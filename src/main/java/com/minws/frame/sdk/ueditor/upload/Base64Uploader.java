@@ -6,13 +6,14 @@ import com.minws.frame.sdk.ueditor.define.BaseState;
 import com.minws.frame.sdk.ueditor.define.FileType;
 import com.minws.frame.sdk.ueditor.define.State;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 
 public final class Base64Uploader {
 
-	public static State save(String content, Map<String, Object> conf) {
+	public static State save(String content, Map<String, Object> conf) throws IOException {
 
 		byte[] data = decode(content);
 
@@ -27,9 +28,9 @@ public final class Base64Uploader {
 		String savePath = PathFormat.parse((String) conf.get("savePath"), (String) conf.get("filename"));
 
 		savePath = savePath + suffix;
-		String physicalPath = (String) conf.get("rootPath") + savePath;
+		// String physicalPath = (String) conf.get("rootPath") + savePath;
 
-		State storageState = StorageManager.saveBinaryFile(data, physicalPath);
+		State storageState = StorageManager.saveBinaryFile(data, savePath);
 
 		if (storageState.isSuccess()) {
 			storageState.putInfo("url", PathFormat.format(savePath));

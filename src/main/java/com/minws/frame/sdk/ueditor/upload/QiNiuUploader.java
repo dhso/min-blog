@@ -107,6 +107,20 @@ public class QiNiuUploader {
 
 	}
 
+	/**
+	 * 上传文件流
+	 * 
+	 * @param path
+	 * @param file
+	 * @return
+	 * @return
+	 */
+	public static PutRet uploadFileStream(String path, InputStream is) {
+		PutRet putRet = new QiniuKit(ConfigKit.getStr("wx.qiniu.ak"), ConfigKit.getStr("wx.qiniu.sk")).put(ConfigKit.getStr("wx.qiniu.bucket"), path, is);
+		return putRet;
+
+	}
+
 	private static boolean validType(String type, String[] allowTypes) {
 		List<String> list = Arrays.asList(allowTypes);
 

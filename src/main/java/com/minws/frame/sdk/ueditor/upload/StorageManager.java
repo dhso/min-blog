@@ -1,10 +1,5 @@
 package com.minws.frame.sdk.ueditor.upload;
 
-import com.jfinal.ext.plugin.config.ConfigKit;
-import com.minws.frame.sdk.ueditor.define.AppInfo;
-import com.minws.frame.sdk.ueditor.define.BaseState;
-import com.minws.frame.sdk.ueditor.define.State;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -14,33 +9,29 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 
+import com.jfinal.ext.plugin.config.ConfigKit;
+import com.minws.frame.kit.StringKit;
+import com.minws.frame.sdk.ueditor.define.AppInfo;
+import com.minws.frame.sdk.ueditor.define.BaseState;
+import com.minws.frame.sdk.ueditor.define.State;
+import com.qiniu.api.io.PutRet;
+
 public class StorageManager {
 	public static final int BUFFER_SIZE = 8192;
 
 	public StorageManager() {
 	}
 
-	public static State saveBinaryFile(byte[] data, String path) {
-		File file = new File(path);
-
-		State state = valid(file);
-
-		if (!state.isSuccess()) {
-			return state;
+	public static State saveBinaryFile(byte[] data, String path) throws IOException {
+		if ("qiniu".equalsIgnoreCase(ConfigKit.getStr("ueditor.upload.to"))) {
+			PutRet putRet = QiNiuUploader.uploadFileStream(path, StringKit.byte2InputStream(data));
+			if (!putRet.ok()) {
+				return new BaseState(false, AppInfo.IO_ERROR);
+			}
 		}
-
-		try {
-			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-			bos.write(data);
-			bos.flush();
-			bos.close();
-		} catch (IOException ioe) {
-			return new BaseState(false, AppInfo.IO_ERROR);
-		}
-
-		state = new BaseState(true, file.getAbsolutePath());
+		State state = new BaseState(true);
 		state.putInfo("size", data.length);
-		state.putInfo("title", file.getName());
+		state.putInfo("title", path);
 		return state;
 	}
 
@@ -125,7 +116,7 @@ public class StorageManager {
 		}
 
 		if ("qiniu".equalsIgnoreCase(ConfigKit.getStr("ueditor.upload.to"))) {
-			if (!QiNiuUploader.uploadFile(tmpFile.getName(), tmpFile)) {
+			if (!QiNiuUploader.uploadFile(path, tmpFile)) {
 				return new BaseState(false, AppInfo.IO_ERROR);
 			}
 		} else {

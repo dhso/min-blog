@@ -1,5 +1,6 @@
 package com.minws.controller.cms;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
@@ -127,8 +128,9 @@ public class CmsController extends Controller {
 	}
 
 	@ActionKey("back/ueditor")
-	public void ueditor() throws JSONException, FileUploadException {
-		String result = new UeditorKit(getRequest()).exec();
+	public void ueditor() throws JSONException, FileUploadException, IOException {
+		String rootPath = StringKit.getClassRealPath(UeditorKit.class);
+		String result = new UeditorKit(getRequest(), rootPath).exec();
 		renderText(result);
 	}
 

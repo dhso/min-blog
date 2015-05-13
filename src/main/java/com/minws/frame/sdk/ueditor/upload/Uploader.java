@@ -1,5 +1,6 @@
 package com.minws.frame.sdk.ueditor.upload;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public class Uploader {
 		this.conf = conf;
 	}
 
-	public final State doExec() {
+	public final State doExec() throws IOException {
 		String filedName = (String) this.conf.get("fieldName");
 		State state = null;
 

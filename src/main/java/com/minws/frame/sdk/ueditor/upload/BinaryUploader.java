@@ -56,7 +56,7 @@ public class BinaryUploader {
 			String suffix = FileType.getSuffixByFilename(originFileName);
 
 			originFileName = originFileName.substring(0, originFileName.length() - suffix.length());
-			savePath = savePath + suffix;
+			savePath = savePath + "/" + originFileName + suffix;
 
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
 
@@ -66,10 +66,10 @@ public class BinaryUploader {
 
 			savePath = PathFormat.parse(savePath, originFileName);
 
-			String physicalPath = (String) conf.get("rootPath") + savePath;
+			// String physicalPath = (String) conf.get("rootPath") + savePath;
 
 			InputStream is = fileStream.openStream();
-			State storageState = StorageManager.saveFileByInputStream(is, physicalPath, maxSize);
+			State storageState = StorageManager.saveFileByInputStream(is, savePath, maxSize);
 			is.close();
 
 			if (storageState.isSuccess()) {
