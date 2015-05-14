@@ -131,6 +131,10 @@ body {
 		width: 518px;
 		margin-right: 192px;
 	}
+	.main-container .code .container {
+		width: 423px!important;
+		overflow-x: scroll !important;
+	}
 	.sidebar-container {
 		margin-left: -192px;
 	}
@@ -150,6 +154,10 @@ body {
 		width: 690px;
 		margin-right: 240px;
 	}
+	.main-container .code .container {
+		width: 595px!important;
+		overflow-x: scroll !important;
+	}
 	.sidebar-container {
 		margin-left: -240px;
 	}
@@ -168,6 +176,10 @@ body {
 	.main-container {
 		width: 830px;
 		margin-right: 300px;
+	}
+	.main-container .code .container {
+		width: 735px!important;
+		overflow-x: scroll !important;
 	}
 	.sidebar-container {
 		margin-left: -300px;
