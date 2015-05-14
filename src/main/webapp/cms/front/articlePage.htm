@@ -1,7 +1,9 @@
 <#assign head_title = "${article.articleTitle}"> <#assign page_type = "articlePage">
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head><#include "/cms/common/_head.htm" encoding="UTF-8">
+<head>
+	<#include "/cms/common/_head.htm" encoding="UTF-8">
+	<link href="${baseUrl}/static/lib/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet">
 </head>
 <body>
 	<#include "/cms/common/header.htm" encoding="UTF-8">
@@ -76,5 +78,13 @@
 
 	</div>
 	<#include "/cms/common/_foot.htm" encoding="UTF-8"> <#include "/cms/common/footer.htm" encoding="UTF-8">
+	<script src="${baseUrl}/static/lib/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			SyntaxHighlighter.config.bloggerMode = true;
+			SyntaxHighlighter.defaults['quick-code'] = false;
+			SyntaxHighlighter.all();
+		})
+	</script>
 </body>
 </html>
