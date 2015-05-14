@@ -25,9 +25,11 @@ body {
 
 .navbar-fixed-center {
 	margin: 0 auto;
+	width: 100%;
 	box-shadow: 1px 1px 1px #ccc;
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
+	box-shadow: 1px 1px 1px #ccc
 }
 
 .footer-fixed-center {
