@@ -85,6 +85,10 @@ body {
 	line-height: 100px
 }
 
+.sidebar-container .panel-body a.label {
+	line-height: 25px;
+}
+
 .editorFrom .input-group {
 	margin: 10px 0 0 0;
 }
@@ -104,6 +108,7 @@ body {
 
 .tagsWall .label {
 	font-size: 16px;
+	line-height: 35px;
 }
 
 .tagsWall a:hover {
