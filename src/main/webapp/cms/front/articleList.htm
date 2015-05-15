@@ -44,7 +44,7 @@
 							</div>
 							<div class="item-content">
 								<div class="text">
-									<#assign articleContentFormat = article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")> <#if articleContentFormat?length lt 300 > ${articleContentFormat} <#else> ${articleContentFormat[0..300]}... </#if> <a href="${baseUrl}/articlePage?articleId=${article.articleId}" class="text-danger"><i class="icon-double-angle-right"></i>&nbsp;<strong>阅读全文</strong></a>
+									<#assign articleContentFormat = article.articleContent?replace("<(\\S*?)[^>]*>.*?|<.*?/>","","ri")> <#if articleContentFormat?length lte 300 > ${articleContentFormat} <#else> ${articleContentFormat[0..300]}... </#if> <a href="${baseUrl}/articlePage?articleId=${article.articleId}" class="text-danger"><i class="icon-double-angle-right"></i>&nbsp;<strong>阅读全文</strong></a>
 								</div>
 							</div>
 							<div class="item-footer">

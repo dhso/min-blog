@@ -18,7 +18,7 @@
 	<div class="panel-body">
 		<#list popularArticleList as article>
 		<p>
-			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><small class="text-warning">[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lt 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
+			<a href="${baseUrl}/articlePage?articleId=${article.articleId}"><small class="text-warning">[${article.articleAuthor}]&nbsp;</small><#if article.articleTitle?length lte 15 > ${article.articleTitle} <#else> ${article.articleTitle[0..15]}... </#if></a>
 		</p>
 		</#list>
 	</div>
