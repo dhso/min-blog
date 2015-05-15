@@ -30,7 +30,7 @@ body {
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	box-shadow: 1px 1px 1px #ccc;
-	z-index: 1;
+	z-index: 3;
 }
 
 .footer-fixed-center {
